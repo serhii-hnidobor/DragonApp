@@ -1,16 +1,18 @@
 import React from 'react';
 import logo from '../../logo.svg';
-import { Counter } from '../../features/counter/Counter';
 import './App.css';
+import {useAppDispatch} from "../../hooks/hooks";
+import {getDragonData} from "../../store/dragon/actions";
 
 function App() {
+  const dispatch = useAppDispatch();
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
+          <button onClick={()=>{(dispatch(getDragonData(1)))}}>Test</button>
         </p>
         <span>
           <span>Learn </span>
