@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import logo from '../../logo.svg';
+import { Counter } from '../../features/counter/Counter';
 import './App.css';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
           <span>Learn </span>
           <a
             className="App-link"
-            href="https://reactjs.org/"
+            href="src/components/app/App"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -25,7 +25,7 @@ function App() {
           <span>, </span>
           <a
             className="App-link"
-            href="https://redux.js.org/"
+            href="src/components/app/App"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -34,7 +34,7 @@ function App() {
           <span>, </span>
           <a
             className="App-link"
-            href="https://redux-toolkit.js.org/"
+            href="src/components/app/App"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -43,7 +43,7 @@ function App() {
           ,<span> and </span>
           <a
             className="App-link"
-            href="https://react-redux.js.org/"
+            href="src/components/app/App"
             target="_blank"
             rel="noopener noreferrer"
           >
