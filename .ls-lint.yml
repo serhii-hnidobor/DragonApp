@@ -13,5 +13,10 @@ ignore:
   - build
   - frontend/build
   - frontend/node_modules
+  - backend/build
+  - backend/node_modules
+  - backend/prisma
+  - shared/build
+  - shared/node_modules
   - Compiled-HTML
   - tests
