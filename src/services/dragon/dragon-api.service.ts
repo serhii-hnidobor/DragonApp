@@ -16,9 +16,9 @@ class DragonApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public getDragonData(page: number): Promise<DragonResponseDto> {
+  public getDragonData(): Promise<DragonResponseDto> {
     return this.#http.load({
-      url: `${this.#apiPrefix}${ApiPath.DRAGON}${DragonApiPath.ROOT}${page}`,
+      url: `${this.#apiPrefix}${ApiPath.DRAGON}${DragonApiPath.ROOT}`,
       options: {
         method: HttpMethod.GET,
       },

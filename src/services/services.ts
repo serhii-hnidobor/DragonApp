@@ -7,12 +7,8 @@ const storageService = new StorageService();
 const http = new Http([], []);
 
 const dragonApi = new DragonApi({
-  apiPrefix: 'test',
+  apiPrefix: 'https://',
   http,
 });
 
-export {
-  http,
-  storageService,
-  dragonApi,
-};
+export { http, storageService, dragonApi };

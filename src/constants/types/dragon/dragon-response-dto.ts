@@ -1,5 +1,5 @@
 type DragonResponseDto = {
-    name: string,
-}
+  name: string;
+};
 
 export type { DragonResponseDto };

@@ -13,9 +13,9 @@
   },
   "scripts": {
     "lint:fs": "ls-lint",
-    "lint:css": "npm run lint:css --workspaces --if-present",
-    "lint:js": "npm run lint:js --workspaces --if-present",
-    "lint": "npm run lint:fs && npm run lint --workspaces --if-present",
+    "lint:js": "npx eslint \"src/**/*.{ts,tsx}\" --resolve-plugins-relative-to . --max-warnings=0",
+    "lint:css": "npx stylelint \"src/**/*.scss\"",
+    "lint": "npm run lint:css && npm run lint:js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

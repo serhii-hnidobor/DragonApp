@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import logo from '../../logo.svg';
-import './app.css';
 import { useAppDispatch } from '../../hooks/hooks';
 import { getDragonData } from '../../store/dragon/actions';
 
@@ -13,8 +12,8 @@ function App(): ReactElement {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
           <button
-            onClick={() => {
-              dispatch(getDragonData(1));
+            onClick={(): void => {
+              dispatch(getDragonData());
             }}
           >
             Test
@@ -43,4 +42,4 @@ function App(): ReactElement {
   );
 }
 
-export default App;
+export { App };
