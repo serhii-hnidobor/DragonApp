@@ -1,1 +1,1 @@
-export * from './content-type/content-type';
+export { ContentType } from 'shared/build';
