@@ -1,1 +1,1 @@
-export { ValidationSchema } from './validation-schema.type';
+export { type ValidationSchema } from './validation-schema.type';

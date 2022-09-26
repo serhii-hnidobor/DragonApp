@@ -2,10 +2,10 @@
   "name": "shared",
   "private": "true",
   "scripts": {
-    "build": "npm run build:ts && cp package.json build",
+    "build": "npm run build:ts",
     "build:ts": "tsc && tsc-alias -p tsconfig.json",
     "lint": "npm run lint:js",
-    "lint:js": "npx eslint \"src/**/*.ts\""
+    "lint:js": "npx eslint \"src/**/*.ts\" --max-warnings=0"
   },
   "dependencies": {
     "joi": "17.6.0"

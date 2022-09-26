@@ -1,9 +1,9 @@
 {
-  "extends": "../../bsa-2022-streamlet/tsconfig.json",
+  "extends": "../tsconfig.json",
   "include": ["src"],
   "exclude": ["node_modules"],
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
     },
