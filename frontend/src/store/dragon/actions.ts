@@ -6,7 +6,6 @@ const getDragonData = createAsyncThunk<DragonResponseDto, void, AsyncThunkConfig
   ActionType.GET_DRAGON_DATA,
   async (_, { extra }) => {
     const { dragonApi } = extra;
-
     return dragonApi.getDragonData();
   },
 );

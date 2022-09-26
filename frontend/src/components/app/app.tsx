@@ -1,45 +1,8 @@
 import React, { ReactElement } from 'react';
-import logo from '../../logo.svg';
-import { useAppDispatch } from '../../hooks/hooks';
-import { getDragonData } from '../../store/dragon/actions';
+import { DragonPage } from '../../page/dragon-page';
 
 function App(): ReactElement {
-  const dispatch = useAppDispatch();
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-          <button
-            onClick={(): void => {
-              dispatch(getDragonData());
-            }}
-          >
-            Test
-          </button>
-        </p>
-        <span>
-          <span>Learn </span>
-          <a className="App-link" href="src/components/app/App" target="_blank" rel="noopener noreferrer">
-            React
-          </a>
-          <span>, </span>
-          <a className="App-link" href="src/components/app/App" target="_blank" rel="noopener noreferrer">
-            Redux
-          </a>
-          <span>, </span>
-          <a className="App-link" href="src/components/app/App" target="_blank" rel="noopener noreferrer">
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a className="App-link" href="src/components/app/App" target="_blank" rel="noopener noreferrer">
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+  return <DragonPage />;
 }
 
 export { App };
