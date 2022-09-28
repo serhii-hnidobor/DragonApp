@@ -1,8 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from '../../constants/enums/enums';
-
 import { getDragonData } from './actions';
 import { DragonResponseDto } from '../../constants/types/dragon/dragon-response-dto';
+import { storageService } from '../../services/services';
 
 type State = {
   data: {
@@ -32,6 +32,9 @@ const reducer = createReducer(initialState, (builder) => {
 
   builder.addCase(getDragonData.fulfilled, (state, { payload }) => {
     state.data.list.push(payload);
+    storageService.save('dragon_data', {
+      list: state.data.list,
+    });
   });
 });
 

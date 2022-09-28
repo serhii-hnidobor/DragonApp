@@ -1,28 +1,8 @@
 version: '3.9'
 services:
-  api-db:
-    image: postgres:14
-    container_name: api-db
-    ports:
-      - '5432:5432'
-    volumes:
-      - pgdata_api:/var/lib/postgresql/data
-      - pgconf_api:/etc/postgresql
-      - pglog_api:/var/log/postgresql
-    env_file:
-      - ../.env/api-db.env
-    networks:
-      - backend_network
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
   backend:
     image: backend
     container_name: backend
-    depends_on:
-      - api-db
     ports:
       - '5001:5001'
     env_file:
@@ -57,14 +37,6 @@ services:
       - frontend_network
 
 volumes:
-  segments:
-    driver: local
-  pgdata_api:
-    driver: local
-  pgconf_api:
-    driver: local
-  pglog_api:
-    driver: local
   shared:
     driver: local
 

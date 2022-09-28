@@ -8,9 +8,9 @@
     "postinstall": "prisma generate",
     "lint": "npm run lint:js",
     "lint:js": "eslint \"src/**/*.ts\"",
-    "migrate": "prisma migrate dev",
+    "migrate": "cd ./prisma && npx prisma db push --preview-feature",
     "prestart": "npm run migrate",
-    "start": "node ./src/server.js",
+    "start": "node ./build/server.js",
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register src/server.ts"
   },
   "dependencies": {
