@@ -1,12 +1,15 @@
 version: '3.9'
 services:
   backend:
-    image: backend
+    image: dragoncontainer.azurecr.io/backend
+    build:
+      context: .docker
+      dockerfile: .docker/backend.Dockerfile
     container_name: backend
     ports:
       - '5001:5001'
     env_file:
-      - ../.env/api.env
+      - .env/api.env
     networks:
       - backend_network
       - frontend_network
@@ -16,7 +19,10 @@ services:
         max-size: "10m"
         max-file: "5"
   frontend:
-    image: frontend
+    image: dragoncontainer.azurecr.io/frontend
+    build:
+      context: .docker
+      dockerfile: .docker/backend.Dockerfile
     container_name: frontend
     depends_on:
       - backend
@@ -24,7 +30,7 @@ services:
       - '8080:80'
       - '443:443'
     env_file:
-      - ../.env/client.env
+      - .env/client.env
     logging:
       driver: "json-file"
       options:

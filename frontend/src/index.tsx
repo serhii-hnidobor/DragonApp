@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { App } from './components/app/app';
 import { reportWebVitals } from './report-web-vitals';
+import './assets/css/scaffolding.scss';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 

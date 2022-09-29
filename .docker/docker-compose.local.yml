@@ -16,7 +16,7 @@ services:
         max-size: "10m"
         max-file: "5"
   frontend:
-    image: frontend
+    image: dragoncontainer.azurecr.io/frontend
     container_name: frontend
     depends_on:
       - backend
