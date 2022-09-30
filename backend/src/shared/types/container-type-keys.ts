@@ -3,7 +3,9 @@ const CONTAINER_TYPES = {
   AuthController: Symbol.for('AuthController'),
   UserService: Symbol.for('UserService'),
   UserRepository: Symbol.for('UserRepository'),
-
+  MailService: Symbol.for('MailService'),
+  MailTransporter: Symbol.for('MailTransporter'),
+  MailRepository: Symbol.for('MailRepository'),
   PrismaClient: Symbol.for('PrismaClient'),
 };
 

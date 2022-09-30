@@ -20,10 +20,16 @@ interface ApiConfig {
   PREFIX: string;
 }
 
+interface MailService {
+  LOGIN: string;
+  PASSWORD: string;
+}
+
 export interface ConfigInterface {
   APP: AppConfig;
   DATABASE: DatabaseConfig;
   API: ApiConfig;
+  MAIL_SERVICE: MailService;
 }
 
 const isDevEnvironment = (nodeEnv = ''): boolean => nodeEnv === AppEnvironment.DEVELOPMENT;
@@ -31,7 +37,7 @@ const isDevEnvironment = (nodeEnv = ''): boolean => nodeEnv === AppEnvironment.D
 const configuration = (): ConfigInterface => {
   config();
 
-  const { NODE_ENV, HOST, PORT, DATABASE_URL, API_BASE_PREFIX } = process.env;
+  const { NODE_ENV, HOST, PORT, DATABASE_URL, API_BASE_PREFIX, MAIL_LOGIN, MAIL_PASSWORD } = process.env;
 
   const host = HOST || 'localhost';
   const port = Number(PORT) || 5000;
@@ -53,6 +59,10 @@ const configuration = (): ConfigInterface => {
     },
     DATABASE: {
       DATABASE_URL: DATABASE_URL || '',
+    },
+    MAIL_SERVICE: {
+      LOGIN: MAIL_LOGIN || '',
+      PASSWORD: MAIL_PASSWORD || '',
     },
     API: {
       PREFIX: API_BASE_PREFIX || '',
