@@ -1,29 +1,55 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { getDragonData } from '../store/dragon/actions';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Lazy, Pagination, Navigation } from 'swiper';
+import { Navigation, Pagination } from 'swiper';
 import 'swiper/css';
-import 'swiper/css/lazy';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import styles from './style.module.scss';
+import { storageService } from '../services/services';
+import { DragonResponseDto } from '../constants/types/dragon/dragon-response-dto';
+import { DataStatus } from '../constants/enums/data-status/data-status';
+import { CachedImg } from '../components/common/cached-img/cached-img';
+import { getCachedImg } from '../helpers/get-cached-img/get-cached-img';
 
 const DragonPage = (): ReactElement | null => {
   const dispatch = useAppDispatch();
+  const [isDragonDataLoadedFromServer, setIsDragonDataLoadedFromServer] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getDragonData());
   }, [dispatch]);
 
-  const dragonData = useAppSelector((state) => state.dragon.data.list);
+  const dataStatus = useAppSelector((state) => {
+    return state.dragon.data.mainDragon.dataStatus;
+  });
 
-  if (!dragonData[0]) {
+  const dragonData = useAppSelector((state) => {
+    const dragon = state.dragon.data.mainDragon;
+    if (!isDragonDataLoadedFromServer || !dragon) {
+      const cachedDragon = storageService.retrieve('dragon_data') as DragonResponseDto;
+      const flickrImagesFromCache = getCachedImg(cachedDragon.flickr_images);
+      return {
+        ...cachedDragon,
+        flickr_images: flickrImagesFromCache,
+      };
+    }
+    return { ...dragon.data };
+  });
+
+  useEffect(() => {
+    if (dataStatus === DataStatus.FULFILLED) {
+      setIsDragonDataLoadedFromServer(true);
+    }
+  }, [dataStatus]);
+
+  if (!dragonData) {
     return null;
   }
 
-  const { flickr_images, name, wikipedia } = dragonData[0];
+  const { flickr_images, name, wikipedia } = dragonData;
 
   return (
     <div>
@@ -36,15 +62,15 @@ const DragonPage = (): ReactElement | null => {
         loop={true}
         navigation={true}
         autoHeight={true}
-        modules={[Lazy, Pagination, Navigation]}
+        modules={[Pagination, Navigation]}
         className={styles['carousel']}
         autoplay={true}
       >
-        {flickr_images.map((image) => {
+        {flickr_images?.map((image, index) => {
           return (
-            <SwiperSlide key={image} className={styles['swiper-slide']}>
-              <img src={image} alt={name} className="swiper-lazy" />
-              <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+            <SwiperSlide key={`image-${index}`} className={styles['swiper-slide']}>
+              <CachedImg src={image} alt={name as string} />
+              <div></div>
             </SwiperSlide>
           );
         })}

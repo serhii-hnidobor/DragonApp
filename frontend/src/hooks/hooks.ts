@@ -5,4 +5,6 @@ import type { RootState, AppDispatch } from '../constants/types/types';
 const useAppDispatch: () => AppDispatch = () => useDispatch<AppDispatch>();
 const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
+export { useImageCaching } from './use-image-cache/use-image-cache';
+
 export { useAppSelector, useAppDispatch };
