@@ -1,6 +1,3 @@
-type UserSignUpResponseDto = {
-  id: string;
-  email: string;
-};
+type UserSignUpResponseDto = { message: string };
 
 export { type UserSignUpResponseDto };

@@ -1,0 +1,29 @@
+.auth-submit-btn {
+  padding: 10px 15px;
+  color: var(--always-white-color);
+  font: inherit;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background-color: var(--brand-green-color);
+  border: none;
+  border-radius: 3px;
+  outline: inherit;
+  cursor: pointer;
+}
+
+.auth-submit-btn:hover {
+  background-color: var(--brand-green-color-hover);
+  transition: all 0.3s ease;
+}
+
+.auth-submit-btn:disabled {
+  background-color: var(--brand-dark-green-color);
+}
+
+.no-hover:hover,
+.no-hover:disabled {
+  background-color: var(--brand-green-color);
+  transition: all 0.3s ease;
+}

@@ -29,6 +29,6 @@ export class AuthController extends BaseHttpController {
     }
     const user = await this.userService.createUser(userRequestDto);
     await this.accountVerificationService.sendVerificationEmail(user);
-    return user;
+    return { message: 'sign up success' };
   }
 }
