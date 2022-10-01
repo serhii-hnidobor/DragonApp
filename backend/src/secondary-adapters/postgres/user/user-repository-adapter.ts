@@ -31,6 +31,17 @@ export class UserRepositoryAdapter implements UserRepository {
     });
   }
 
+  async setIsActivated(shouldBeActivated: boolean, userId: string): Promise<void> {
+    await this.prismaClient.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        isActivated: shouldBeActivated,
+      },
+    });
+  }
+
   createUser(userRequestDto: UserSignUpRequestDto): Promise<User> {
     return this.prismaClient.user.create({
       data: userRequestDto,
