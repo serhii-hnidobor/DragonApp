@@ -51,6 +51,8 @@
   "devDependencies": {
     "@ls-lint/ls-lint": "^1.11.2",
     "@stylelint/prettier-config": "^2.0.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "eslint": "^8.24.0",
     "eslint-config-standard-with-typescript": "^23.0.0",

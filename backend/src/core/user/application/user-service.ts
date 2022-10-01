@@ -2,7 +2,6 @@ import { inject, injectable } from 'inversify';
 import { User } from '@prisma/client';
 import { CONTAINER_TYPES, UserSignUpRequestDto } from '../../../shared/types/types';
 import { UserRepository } from '../port/user-repository';
-import { UserSignUpResponseDto } from 'shared/build';
 
 @injectable()
 export class UserService {
@@ -16,7 +15,15 @@ export class UserService {
     return this.userRepository.getAll();
   }
 
-  createUser(userRequestDto: UserSignUpRequestDto): Promise<UserSignUpResponseDto> {
+  getUserByEmail(email: string): Promise<User | null> {
+    return this.userRepository.getUserByEmail(email);
+  }
+
+  getById(id: string): Promise<User | null> {
+    return this.userRepository.getById(id);
+  }
+
+  createUser(userRequestDto: UserSignUpRequestDto): Promise<User> {
     return this.userRepository.createUser(userRequestDto);
   }
 }

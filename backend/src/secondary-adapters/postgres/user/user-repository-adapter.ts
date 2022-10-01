@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify';
 import { UserRepository } from '~/core/user/port/user-repository';
 import { PrismaClient, User } from '@prisma/client';
-import { CONTAINER_TYPES, UserSignUpRequestDto, UserSignUpResponseDto } from '../../../shared/types/types';
+import { CONTAINER_TYPES, UserSignUpRequestDto } from '../../../shared/types/types';
 
 @injectable()
 export class UserRepositoryAdapter implements UserRepository {
@@ -15,14 +15,25 @@ export class UserRepositoryAdapter implements UserRepository {
     return this.prismaClient.user.findMany();
   }
 
-  async createUser(userRequestDto: UserSignUpRequestDto): Promise<UserSignUpResponseDto> {
-    const user = await this.prismaClient.user.create({
+  getUserByEmail(email: string): Promise<User | null> {
+    return this.prismaClient.user.findFirst({
+      where: {
+        email,
+      },
+    });
+  }
+
+  getById(id: string): Promise<User | null> {
+    return this.prismaClient.user.findFirst({
+      where: {
+        id,
+      },
+    });
+  }
+
+  createUser(userRequestDto: UserSignUpRequestDto): Promise<User> {
+    return this.prismaClient.user.create({
       data: userRequestDto,
     });
-
-    return {
-      id: user.id,
-      email: user.email,
-    };
   }
 }

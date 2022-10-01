@@ -42,6 +42,8 @@ export class MailRepositoryAdapter implements MailRepository {
         },
       })
       .then(() => ({ message: 'The email has been sent!' }))
-      .catch((err: Error) => ({ message: err.message }));
+      .catch((err: Error) => {
+        return { message: err.message };
+      });
   }
 }
