@@ -10,16 +10,20 @@ import {
   AccountVerificationConfirmResponseDto,
   AccountVerificationInitRequestDto,
   AccountVerificationInitResponseDto,
+  errorCodes,
   RefreshTokenRequestDto,
   TokenPair,
+  UserSignInRequestDto,
+  UserSignInResponseDto,
 } from 'shared/build';
 import { Unauthorized } from '~/shared/exceptions/unauthorized';
-import { generateJwt } from '~/shared/helpers/encryption';
+import { compareHash, generateJwt } from '~/shared/helpers/encryption';
 import { CONFIG } from '~/configuration/config';
 import { NotFound } from '~/shared/exceptions/not-found';
 import { RefreshTokenService } from '~/core/refresh-token/application/refresh-token-service';
 import { trimUser } from '~/shared/helpers/user/trim-user';
 import { exceptionMessages, successMessages } from '~/shared/constants/enum/messages';
+import { Forbidden } from '~/shared/exceptions/forbidden';
 
 @controller(ApiPath.AUTH)
 export class AuthController extends BaseHttpController {
@@ -45,9 +49,10 @@ export class AuthController extends BaseHttpController {
     if (duplicateUser) {
       throw new DuplicationError();
     }
+    delete userRequestDto.passwordConfirm;
     const user = await this.userService.createUser(userRequestDto);
     await this.accountVerificationService.sendVerificationEmail(user);
-    return { message: 'sign up success' };
+    return { message: successMessages.auth.SUCCESS_SIGN_UP };
   }
 
   @httpPost(AuthApiPath.REFRESH_TOKENS)
@@ -113,6 +118,34 @@ export class AuthController extends BaseHttpController {
 
     return {
       message: successMessages.auth.SUCCESS_ACCOUNT_VERIFICATION_INIT_NEW_LETTER,
+    };
+  }
+
+  @httpPost(AuthApiPath.SIGN_IN)
+  public async signIn(@requestBody() userRequestDto: UserSignInRequestDto): Promise<UserSignInResponseDto> {
+    const user = await this.userService.getUserByEmail(userRequestDto.email);
+    if (!user) {
+      throw new Unauthorized(exceptionMessages.auth.INCORRECT_CREDENTIALS_LOGIN);
+    }
+    if (!user.isActivated) {
+      throw new Forbidden(exceptionMessages.auth.EMAIL_NOT_VERIFIED, errorCodes.auth.signIn.UNVERIFIED);
+    }
+    const isSameHash = await compareHash(userRequestDto.password, user.password);
+    if (!isSameHash) {
+      throw new Unauthorized(exceptionMessages.auth.INCORRECT_CREDENTIALS_LOGIN);
+    }
+    const accessToken = await generateJwt({
+      payload: trimUser(user),
+      lifetime: CONFIG.ENCRYPTION.ACCESS_TOKEN_LIFETIME,
+      secret: CONFIG.ENCRYPTION.ACCESS_TOKEN_SECRET,
+    });
+    return {
+      user: trimUser(user),
+      tokens: {
+        accessToken,
+        refreshToken: await this.userService.createRefreshToken(user.id),
+      },
+      message: successMessages.auth.SUCCESS_SIGN_IN,
     };
   }
 }

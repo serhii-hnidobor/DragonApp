@@ -1,7 +1,7 @@
-version: '3.9'
+version: '3'
 services:
   backend:
-    image: dragoncontainer.azurecr.io/backend
+    image: sergo3577/backend
     build:
       context: .docker
       dockerfile: .docker/backend.Dockerfile
@@ -9,17 +9,17 @@ services:
     ports:
       - '5001:5001'
     env_file:
-      - .env/api.env
+      - ../.env/api.env
     networks:
-      - backend_network
-      - frontend_network
+      - backend-network
+      - frontend-network
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "5"
   frontend:
-    image: dragoncontainer.azurecr.io/frontend
+    image: frontend
     build:
       context: .docker
       dockerfile: .docker/backend.Dockerfile
@@ -30,7 +30,7 @@ services:
       - '8080:80'
       - '443:443'
     env_file:
-      - .env/client.env
+      - ../.env/client.env
     logging:
       driver: "json-file"
       options:
@@ -39,15 +39,15 @@ services:
     volumes:
       - ../nginx/nginx.local.conf:/etc/nginx/nginx.conf
     networks:
-      - backend_network
-      - frontend_network
+      - backend-network
+      - frontend-network
 
 volumes:
   shared:
     driver: local
 
 networks:
-  backend_network:
+  backend-network:
     driver: bridge
-  frontend_network:
+  frontend-network:
     driver: bridge

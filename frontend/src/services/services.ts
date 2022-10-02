@@ -3,8 +3,10 @@ import { StorageService } from './storage/local-storage.service';
 import { DragonApi } from './dragon/dragon-api.service';
 import { AuthApi } from './auth/auth';
 import { ENV } from '../constants/enums/enums';
+import { TokensStorageService } from './storage/tokens-storage.service';
 
 const storageService = new StorageService();
+const tokensStorageService = new TokensStorageService(storageService);
 
 const http = new Http([], []);
 
@@ -18,4 +20,4 @@ const authApi = new AuthApi({
   http,
 });
 
-export { http, storageService, dragonApi, authApi };
+export { http, storageService, dragonApi, authApi, tokensStorageService };

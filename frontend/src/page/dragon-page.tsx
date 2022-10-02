@@ -13,6 +13,7 @@ import { DragonResponseDto } from '../constants/types/dragon/dragon-response-dto
 import { DataStatus } from '../constants/enums/data-status/data-status';
 import { CachedImg } from '../components/common/cached-img/cached-img';
 import { getCachedImg } from '../helpers/get-cached-img/get-cached-img';
+import { StorageKeys } from '../constants/enums/enums';
 
 const DragonPage = (): ReactElement | null => {
   const dispatch = useAppDispatch();
@@ -29,7 +30,7 @@ const DragonPage = (): ReactElement | null => {
   const dragonData = useAppSelector((state) => {
     const dragon = state.dragon.data.mainDragon;
     if (!isDragonDataLoadedFromServer || !dragon) {
-      const cachedDragon = storageService.retrieve('dragon_data') as DragonResponseDto;
+      const cachedDragon = storageService.retrieve(StorageKeys.CACHED_DRAGON_DATA) as DragonResponseDto;
       const flickrImagesFromCache = getCachedImg(cachedDragon.flickr_images);
       return {
         ...cachedDragon,
@@ -69,7 +70,7 @@ const DragonPage = (): ReactElement | null => {
         {flickr_images?.map((image, index) => {
           return (
             <SwiperSlide key={`image-${index}`} className={styles['swiper-slide']}>
-              <CachedImg src={image} alt={name as string} />
+              <CachedImg src={image} alt={name as string} height={'500'} />
               <div></div>
             </SwiperSlide>
           );

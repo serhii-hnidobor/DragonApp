@@ -43,7 +43,6 @@ export class MailRepositoryAdapter implements MailRepository {
       })
       .then(() => ({ message: 'The email has been sent!' }))
       .catch((err: Error) => {
-        console.log('-------------------------------------------------------', err.message);
         return { message: err.message };
       });
   }

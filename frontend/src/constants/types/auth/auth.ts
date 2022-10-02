@@ -5,4 +5,5 @@ export {
   AccountVerificationInitResponseDto,
   RefreshTokenRequestDto,
   RefreshTokenResponseDto,
+  TokenPair,
 } from 'shared/build';

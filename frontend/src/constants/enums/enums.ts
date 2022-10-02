@@ -7,3 +7,4 @@ export * from './error/error';
 export * from './auth/auth';
 export { ToastNotificationType } from './toast-notification/toast-notification';
 export * from './icon/icon';
+export * from './storage/storage';

@@ -4,4 +4,5 @@ export {
   UserSignUpRequestDto,
   UserSignUpResponseDto,
   GetCurrentUserResponseDto,
+  UserBaseResponseDto,
 } from 'shared/build';

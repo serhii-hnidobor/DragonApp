@@ -1,0 +1,46 @@
+.sign-in-container {
+  width: 750px;
+  height: 500px;
+  margin: 30px auto;
+  background-color: var(--auth-modal-background);
+  border: solid 3px;
+  border-radius: 3px;
+  border-image-source: var(--auth-border);
+  border-image-slice: 1;
+  box-shadow: var(--auth-box-shadow);
+}
+
+.sign-in-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+  color: var(--white-text-color);
+}
+
+.sign-in-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.sign-in-container-content {
+  padding: 30px 75px;
+}
+
+.sign-in-form > div:nth-child(2n) {
+  margin: 20px 0;
+}
+
+@media screen and (max-width: 750px) {
+  .sign-in-container-content {
+    padding: 10px 35px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sign-in-container-content {
+    padding: 10px;
+  }
+}

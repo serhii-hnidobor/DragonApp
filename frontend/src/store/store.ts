@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { dragonApi } from '../services/services';
+import { dragonApi, tokensStorageService, authApi } from '../services/services';
 import { rootReducer } from './root-reducer';
 
 const extraArgument = {
   dragonApi,
+  tokensStorageService,
+  authApi,
 };
 
 const store = configureStore({
