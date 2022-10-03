@@ -7,6 +7,7 @@ ENV REACT_APP_SERVER_HOST=$REACT_APP_SERVER_HOST
 WORKDIR /app
 
 COPY ./package.json ./
+COPY ./package-lock.json ./
 COPY ./tsconfig.json ./
 COPY ./.eslintrc.yml ./
 COPY ./shared ./shared/
