@@ -1,7 +1,7 @@
 import { BaseHttpController, controller, httpGet } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import { CONTAINER_TYPES } from '../../../shared/types/types';
-import { UserService } from '../../../core/user/application/user-service';
+import { UserService } from '~/core/user/application/user-service';
 import { User } from '@prisma/client';
 import { ApiPath } from '~/shared/enums/api/api';
 
