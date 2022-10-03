@@ -18,5 +18,5 @@ RUN npm run build:backend
 RUN rm -rf ./backend/core/src
 RUN rm -rf ./shared/src
 
-EXPOSE 5001
+EXPOSE $PORT
 CMD npm start -w backend
