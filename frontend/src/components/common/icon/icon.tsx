@@ -1,6 +1,9 @@
 import styles from './styles.module.scss';
 import { IconName } from 'constants/enums/enums';
 import { ReactComponent as Bell } from 'assets/img/bell.svg';
+import { ReactComponent as TapeMeasure } from 'assets/img/tapemeasure.svg';
+import { ReactComponent as Weight } from 'assets/img/weight.svg';
+import { ReactComponent as Rocket } from 'assets/img/rocket.svg';
 
 import clsx from 'clsx';
 const getColor = (color: string): string => styles[`fill${color}`];
@@ -37,6 +40,18 @@ const Icon = ({ name, color, width, height, className, onClick }: IconProps): JS
   switch (name) {
     case IconName.BELL: {
       return <Bell {...commonProps} />;
+    }
+
+    case IconName.TAPEMEASURE: {
+      return <TapeMeasure {...commonProps} />;
+    }
+
+    case IconName.WEIGHT: {
+      return <Weight {...commonProps} />;
+    }
+
+    case IconName.ROCKET: {
+      return <Rocket {...commonProps} />;
     }
 
     default: {

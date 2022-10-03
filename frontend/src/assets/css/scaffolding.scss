@@ -13,6 +13,12 @@ body {
   background-size: cover;
 }
 
+a {
+  color: var(--white-text-color);
+  font-size: 16px;
+  text-decoration: none;
+}
+
 :root {
   --gray-400-primary-background: #181a20;
   --primary-text-color: #181a20;

@@ -1,3 +1,11 @@
+.dragon-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  min-height: 100vh;
+}
+
 .carousel-image {
   display: block;
   width: 100%;
@@ -13,7 +21,7 @@
 }
 
 .dragon-page-main-header {
-  margin-bottom: 80px;
+  margin-bottom: 30px;
   color: white;
   font-size: 40px;
   text-align: center;
@@ -37,10 +45,45 @@
   width: 40%;
 }
 
-.dragon-page-sub-header {
-  margin-bottom: 80px;
+.dragon-info-block > p {
   color: white;
+  font-size: 20px;
+}
+
+.dragon-info-block > svg {
+  margin-bottom: 10px;
+}
+
+.dragon-page-sub-header {
+  margin: 40px 0 20px;
+  color: var(--brand-green-color);
   font-size: 40px;
   text-align: center;
   text-transform: capitalize;
+}
+
+.dragon-info-container {
+  display: grid;
+  grid-template-rows: 150px 150px;
+  grid-template-columns: 1fr 1fr;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.dragon-info-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dragon-description-wrapper {
+  width: 650px;
+  margin: 0 auto;
+}
+
+.dragon-description {
+  color: var(--white-text-color);
+  font-size: 17px;
+  line-height: 25px;
 }
