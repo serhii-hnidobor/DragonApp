@@ -6,16 +6,16 @@ ENV REACT_APP_SERVER_HOST=$REACT_APP_SERVER_HOST
 
 WORKDIR /app
 
-COPY ../package*.json ./
-COPY ../tsconfig.json ./
-COPY ../.eslintrc.yml ./
-COPY ../shared ./shared/
-COPY ../frontend/package.json ./frontend/
+COPY ./package.json ./
+COPY ./tsconfig.json ./
+COPY ./.eslintrc.yml ./
+COPY ./shared ./shared/
+COPY ./frontend/package.json ./frontend/
 
 RUN npm pkg set scripts.postinstall="npm run build:shared"
 RUN npm ci -w shared -w frontend
 
-COPY ../frontend ./frontend/
+COPY ./frontend ./frontend/
 
 RUN npm run build:frontend
 
