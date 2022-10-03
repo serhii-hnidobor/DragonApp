@@ -7,6 +7,7 @@ ENV REACT_APP_SERVER_HOST=$REACT_APP_SERVER_HOST
 WORKDIR /app
 
 COPY ./package.json ./
+COPY ./package-lock.json ./
 COPY ./tsconfig.json ./
 COPY ./.eslintrc.yml ./
 COPY ./shared ./shared/
@@ -14,17 +15,10 @@ COPY ./frontend/package.json ./frontend/
 
 RUN npm pkg set scripts.postinstall="npm run build:shared"
 RUN npm ci -w shared -w frontend
+RUN npm install -g serve
 
 COPY ./frontend ./frontend/
 
 RUN npm run build:frontend
 
-FROM nginx:1.22.0-alpine
-
-COPY nginx/nginx.local.conf /etc/nginx/nginx.conf
-RUN rm -rf /usr/share/nginx/html/*
-COPY --from=frontend-build /app/frontend/build/ /usr/share/nginx/html
-
-EXPOSE 80
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD serve -p $PORT -s dist

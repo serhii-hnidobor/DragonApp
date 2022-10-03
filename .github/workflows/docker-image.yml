@@ -5,7 +5,15 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  prepareEnviroment: 
+    runs-on: ubuntu-latest
+    name: Build and test
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bahmutov/npm-install@v1
+      - run: npm run lint
+  deploy:
+    needs: prepareEnviroment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,7 +24,7 @@ jobs:
           email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_FRONTEND_APP_NAME }}
-          dockerfile_directory: ./.docker/
+          dockerfile_directory: ./
           dockerfile_name: frontend.Dockerfile
           docker_options: "--no-cache"
           process_type: web
