@@ -8,11 +8,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: prepareEnviromet
+      - name: Checkout & prepare enviroment
+        uses: actions/checkout@v2
          - run:npm run build
          - run:npm run lint
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Build, Push and Release a Docker container to Heroku.
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
