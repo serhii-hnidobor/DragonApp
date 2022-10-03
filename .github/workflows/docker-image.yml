@@ -12,6 +12,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - run: cd ../
       - run: npm install
       - run: npm run build --if-present
       - name: Build, Push and Release a Docker container to Heroku.
