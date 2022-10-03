@@ -26,6 +26,4 @@ COPY nginx/nginx.local.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=frontend-build /app/frontend/build/ /usr/share/nginx/html
 
-EXPOSE 80
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
