@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: bahmutov/npm-install@v1
-      - run: npm i
+      - run: npm run lint
   deploy:
     needs: prepareEnviroment
     runs-on: ubuntu-latest
