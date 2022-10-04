@@ -1,7 +1,7 @@
 import { ApiError } from './data/api-error';
 import { Request, Response, NextFunction } from 'express';
 import { Unauthorized, BadRequest, Forbidden, NotFound } from '../../../shared/exceptions/exceptions';
-import { logger } from '../../../configuration/logger';
+import { logger } from '~/configuration/logger';
 
 interface HandlerResult {
   errors: ApiError[];

@@ -2,16 +2,17 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { isBase64 } from '../../helpers/is-base64/is-base-64';
 import { storageService } from '../../services/services';
 import { CachedImg } from '../../constants/types/cached-img/cached-img';
+import { StorageKeys } from '../../constants/enums/enums';
 
 const useImageCaching = (): [MutableRefObject<HTMLImageElement>, VoidFunction, boolean] => {
   const [cached, setCached] = useState(false);
   const ref = useRef<HTMLImageElement>() as MutableRefObject<HTMLImageElement>;
 
   const cacheImg = (base64: string, src: string): void => {
-    const curCachedImage: CachedImg[] | null = storageService.retrieve('cached_img');
+    const curCachedImage: CachedImg[] | null = storageService.retrieve(StorageKeys.CACHED_IMG);
 
     if (!curCachedImage) {
-      storageService.save('cached_img', [{ src, base64 }]);
+      storageService.save(StorageKeys.CACHED_IMG, [{ src, base64 }]);
       setCached(true);
       return;
     }
@@ -23,11 +24,11 @@ const useImageCaching = (): [MutableRefObject<HTMLImageElement>, VoidFunction, b
         base64,
         src,
       });
-      storageService.save('cached_img', curCachedImage);
+      storageService.save(StorageKeys.CACHED_IMG, curCachedImage);
     }
 
     curCachedImage[isImageAlreadyCached] = { src, base64 };
-    storageService.save('cached_img', curCachedImage);
+    storageService.save(StorageKeys.CACHED_IMG, curCachedImage);
   };
   const onLoad = (): void => {
     if (!ref.current || !ref.current.complete || cached) {

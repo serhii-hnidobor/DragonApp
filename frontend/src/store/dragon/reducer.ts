@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DataStatus } from '../../constants/enums/enums';
-import { getDragonData } from './actions';
+import { DataStatus, StorageKeys } from '../../constants/enums/enums';
+import { getDragonData, getDragonList } from './actions';
 import { DragonResponseDto } from '../../constants/types/dragon/dragon-response-dto';
 import { storageService } from '../../services/services';
 
@@ -41,7 +41,19 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(getDragonData.fulfilled, (state, { payload }) => {
     state.data.mainDragon.data = payload;
     state.data.mainDragon.dataStatus = DataStatus.FULFILLED;
-    storageService.save('dragon_data', payload);
+    storageService.save(StorageKeys.CACHED_DRAGON_DATA, payload);
+  });
+
+  builder.addCase(getDragonList.pending, (state) => {
+    state.data.dataStatus = DataStatus.PENDING;
+    state.data.error = undefined;
+  });
+
+  builder.addCase(getDragonList.fulfilled, (state, { payload }) => {
+    state.data.list.concat(payload.docs);
+    state.data.dataStatus = DataStatus.FULFILLED;
+    state.data.lastPage = payload.totalPages;
+    state.data.currentPage = payload.page;
   });
 });
 

@@ -1,0 +1,89 @@
+.dragon-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.carousel-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel {
+  width: 75%;
+  max-width: 1280px;
+  min-height: 420px;
+  max-height: 720px;
+}
+
+.dragon-page-main-header {
+  margin-bottom: 30px;
+  color: white;
+  font-size: 40px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  text-align: center;
+  background: none;
+}
+
+.swiper-slide:nth-child(2n) {
+  width: 20%;
+}
+
+.swiper-slide:nth-child(3n) {
+  width: 40%;
+}
+
+.dragon-info-block > p {
+  color: white;
+  font-size: 20px;
+}
+
+.dragon-info-block > svg {
+  margin-bottom: 10px;
+}
+
+.dragon-page-sub-header {
+  margin: 40px 0 20px;
+  color: var(--brand-green-color);
+  font-size: 40px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.dragon-info-container {
+  display: grid;
+  grid-template-rows: 150px 150px;
+  grid-template-columns: 1fr 1fr;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.dragon-info-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dragon-description-wrapper {
+  width: 650px;
+  margin: 0 auto;
+}
+
+.dragon-description {
+  color: var(--white-text-color);
+  font-size: 17px;
+  line-height: 25px;
+}

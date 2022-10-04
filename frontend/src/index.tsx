@@ -5,12 +5,15 @@ import { store } from './store/store';
 import { App } from './components/app/app';
 import { reportWebVitals } from './report-web-vitals';
 import './assets/css/scaffolding.scss';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
 );
 
