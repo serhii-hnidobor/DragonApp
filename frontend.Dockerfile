@@ -14,8 +14,8 @@ COPY ./shared ./shared/
 COPY ./frontend/package.json ./frontend/
 
 RUN touch ./frontend/.env
-RUN echo "REACT_APP_API_ORIGIN_URL = $REACT_APP_SERVER_HOST" >> ./frontend.env
-RUN echo "REACT_APP_SERVER_HOST = $REACT_APP_API_ORIGIN_URL" >> ./frontend.env
+RUN echo "REACT_APP_API_ORIGIN_URL = $REACT_APP_SERVER_HOST" >> ./frontend/.env
+RUN echo "REACT_APP_SERVER_HOST = $REACT_APP_API_ORIGIN_URL" >> ./frontend/.env
 
 RUN npm pkg set scripts.postinstall="npm run build:shared"
 RUN npm ci -w shared -w frontend
