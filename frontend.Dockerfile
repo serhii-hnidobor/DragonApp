@@ -28,4 +28,5 @@ RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`u
     mv envsubst /usr/local/bin
 COPY ./nginx/nginx.local.conf /etc/nginx/nginx.template
 CMD ["/bin/sh", "-c", "envsubst < /etc/nginx/nginx.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+
 COPY --from=frontend-build /app/frontend/build/ /usr/share/nginx/html
