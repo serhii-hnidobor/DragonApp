@@ -2,6 +2,7 @@ import express from 'express';
 import PinoHttp from 'pino-http';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
+import cors from 'cors';
 
 import 'reflect-metadata';
 
@@ -33,6 +34,7 @@ class Application {
       app.use(helmet());
       app.use(bodyParser.urlencoded({ 'extended': true }));
       app.use(bodyParser.json());
+      app.use(cors());
       app.use(PinoHttp({ logger }));
     });
   }
