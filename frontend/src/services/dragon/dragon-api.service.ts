@@ -22,11 +22,13 @@ class DragonApi {
       options: {
         method: HttpMethod.GET,
       },
+      preInterceptors: [],
+      postInterceptors: [],
     });
   }
   public getDragonList(page: number): Promise<DragonListResponseDto> {
     return this.#http.load({
-      url: `${this.#apiPrefix}${ApiPath.DRAGON}${DragonApiPath.ROOT}`,
+      url: `${this.#apiPrefix}${ApiPath.DRAGON_LIST}`,
       options: {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
@@ -35,6 +37,8 @@ class DragonApi {
           limit: DRAGON_NUM_ON_ONE_PAGE,
         }),
       },
+      preInterceptors: [],
+      postInterceptors: [],
     });
   }
 }

@@ -3,6 +3,7 @@ import { DataStatus, StorageKeys } from '../../constants/enums/enums';
 import { getDragonData, getDragonList } from './actions';
 import { DragonResponseDto } from '../../constants/types/dragon/dragon-response-dto';
 import { storageService } from '../../services/services';
+import { ConcatObjectWithUniqueIdInArray } from '../../helpers/array/array';
 
 type State = {
   data: {
@@ -50,7 +51,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
 
   builder.addCase(getDragonList.fulfilled, (state, { payload }) => {
-    state.data.list.concat(payload.docs);
+    ConcatObjectWithUniqueIdInArray(state.data.list, payload.docs);
     state.data.dataStatus = DataStatus.FULFILLED;
     state.data.lastPage = payload.totalPages;
     state.data.currentPage = payload.page;

@@ -1,7 +1,7 @@
-import { HttpError } from '../../constants/exceptions/exceptions';
-import { HttpCode, HttpHeader, HttpMethod } from '../../constants/enums/enums';
-import { HttpOptions } from '../../constants/types/types';
-import { getStringifiedQuery } from '../../helpers/helpers';
+import { HttpError } from 'constants/exceptions/exceptions';
+import { HttpCode, HttpHeader, HttpMethod } from 'constants/enums/enums';
+import { HttpOptions } from 'constants/types/types';
+import { getStringifiedQuery } from 'helpers/helpers';
 import { PostInterceptor, PreInterceptor } from './interceptors/interceptor';
 
 class Http {

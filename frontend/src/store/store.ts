@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-
 import { dragonApi, tokensStorageService, authApi } from '../services/services';
 import { rootReducer } from './root-reducer';
+import { injectStore as injectStoreRefreshInterceptor } from '../services/http/interceptors/refresh-token-interceptor';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const extraArgument = {
   dragonApi,
@@ -9,8 +11,16 @@ const extraArgument = {
   authApi,
 };
 
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: [],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
       thunk: { extraArgument },
@@ -19,6 +29,10 @@ const store = configureStore({
   },
 });
 
+injectStoreRefreshInterceptor(store);
+
+const persistor = persistStore(store);
+
 type storeType = typeof store;
 
-export { extraArgument, store, type storeType };
+export { extraArgument, store, persistor, type storeType };
