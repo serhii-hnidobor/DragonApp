@@ -1,0 +1,20 @@
+.dragon-list-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.dragon-list-page-table {
+  max-width: 1000px;
+}
+
+table {
+  color: var(--white-text-color);
+  font-size: 20px;
+}
+
+table tr:nth-child(2n) {
+  margin: 15px 0;
+}

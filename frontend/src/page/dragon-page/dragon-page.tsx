@@ -12,8 +12,10 @@ import { DragonResponseDto } from '../../constants/types/dragon/dragon-response-
 import { DataStatus } from '../../constants/enums/data-status/data-status';
 import { CachedImg } from '../../components/common/cached-img/cached-img';
 import { getCachedImg } from '../../helpers/get-cached-img/get-cached-img';
-import { IconColor, IconName, StorageKeys } from '../../constants/enums/enums';
+import { AppRoutes, IconColor, IconName, StorageKeys } from '../../constants/enums/enums';
 import { Icon } from '../../components/common/icon';
+import { NavLink } from '../../components/common/nav-link/nav-link';
+import commonFormStyles from '../account-verification-page/form-controls.module.scss';
 
 const DragonPage = (): ReactElement | null => {
   const dispatch = useAppDispatch();
@@ -31,6 +33,9 @@ const DragonPage = (): ReactElement | null => {
     const dragon = state.dragon.data.mainDragon;
     if (!isDragonDataLoadedFromServer || !dragon) {
       const cachedDragon = storageService.retrieve(StorageKeys.CACHED_DRAGON_DATA) as DragonResponseDto;
+      if (!cachedDragon) {
+        return;
+      }
       const flickrImagesFromCache = getCachedImg(cachedDragon.flickr_images);
       return {
         ...cachedDragon,
@@ -88,6 +93,12 @@ const DragonPage = (): ReactElement | null => {
             <a href={wikipedia}>Wiki</a>
           </div>
         </div>
+        <NavLink
+          linkTitle="View all dragon"
+          prompt=""
+          route={AppRoutes.DRAGON_LIST}
+          className={commonFormStyles['upper-space-regular']}
+        />
       </div>
     </div>
   );

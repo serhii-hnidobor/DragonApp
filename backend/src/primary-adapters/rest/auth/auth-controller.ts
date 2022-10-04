@@ -1,5 +1,5 @@
 import { inject } from 'inversify';
-import { BaseHttpController, controller, httpPost, requestBody } from 'inversify-express-utils';
+import { BaseHttpController, controller, httpGet, httpPost, request, requestBody } from 'inversify-express-utils';
 import { ApiPath, AuthApiPath } from '~/shared/enums/api/api';
 import { CONTAINER_TYPES, UserSignUpRequestDto, UserSignUpResponseDto } from '../../../shared/types/types';
 import { UserService } from '~/core/user/application/user-service';
@@ -11,19 +11,24 @@ import {
   AccountVerificationInitRequestDto,
   AccountVerificationInitResponseDto,
   errorCodes,
+  GetCurrentUserResponseDto,
   RefreshTokenRequestDto,
   TokenPair,
+  userSignIn,
   UserSignInRequestDto,
   UserSignInResponseDto,
+  userSignUp,
 } from 'shared/build';
 import { Unauthorized } from '~/shared/exceptions/unauthorized';
-import { compareHash, generateJwt } from '~/shared/helpers/encryption';
+import { generateJwt } from '~/shared/helpers/encryption';
 import { CONFIG } from '~/configuration/config';
 import { NotFound } from '~/shared/exceptions/not-found';
 import { RefreshTokenService } from '~/core/refresh-token/application/refresh-token-service';
 import { trimUser } from '~/shared/helpers/user/trim-user';
 import { exceptionMessages, successMessages } from '~/shared/constants/enum/messages';
 import { Forbidden } from '~/shared/exceptions/forbidden';
+import { authenticationMiddleware, validationMiddleware } from '~/primary-adapters/rest/middleware';
+import { ExtendedAuthenticatedRequest } from '~/shared/types/express';
 
 @controller(ApiPath.AUTH)
 export class AuthController extends BaseHttpController {
@@ -43,7 +48,7 @@ export class AuthController extends BaseHttpController {
     this.userService = userService;
   }
 
-  @httpPost(AuthApiPath.SIGN_UP)
+  @httpPost(AuthApiPath.SIGN_UP, validationMiddleware(userSignUp))
   public async signUp(@requestBody() userRequestDto: UserSignUpRequestDto): Promise<UserSignUpResponseDto> {
     const duplicateUser = await this.userService.getUserByEmail(userRequestDto.email);
     if (duplicateUser) {
@@ -121,7 +126,7 @@ export class AuthController extends BaseHttpController {
     };
   }
 
-  @httpPost(AuthApiPath.SIGN_IN)
+  @httpPost(AuthApiPath.SIGN_IN, validationMiddleware(userSignIn))
   public async signIn(@requestBody() userRequestDto: UserSignInRequestDto): Promise<UserSignInResponseDto> {
     const user = await this.userService.getUserByEmail(userRequestDto.email);
     if (!user) {
@@ -130,7 +135,7 @@ export class AuthController extends BaseHttpController {
     if (!user.isActivated) {
       throw new Forbidden(exceptionMessages.auth.EMAIL_NOT_VERIFIED, errorCodes.auth.signIn.UNVERIFIED);
     }
-    const isSameHash = await compareHash(userRequestDto.password, user.password);
+    const isSameHash = userRequestDto.password === user.password;
     if (!isSameHash) {
       throw new Unauthorized(exceptionMessages.auth.INCORRECT_CREDENTIALS_LOGIN);
     }
@@ -146,6 +151,18 @@ export class AuthController extends BaseHttpController {
         refreshToken: await this.userService.createRefreshToken(user.id),
       },
       message: successMessages.auth.SUCCESS_SIGN_IN,
+    };
+  }
+
+  @httpGet(AuthApiPath.USER, authenticationMiddleware)
+  public async getCurrentUser(@request() req: ExtendedAuthenticatedRequest): Promise<GetCurrentUserResponseDto> {
+    const user = await this.userService.getUserByEmail(req.user.email);
+    if (!user) {
+      throw new NotFound(exceptionMessages.auth.USER_NOT_FOUND);
+    }
+
+    return {
+      user: trimUser(user),
     };
   }
 }

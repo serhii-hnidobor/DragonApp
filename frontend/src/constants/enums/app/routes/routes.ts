@@ -8,6 +8,7 @@ const AppRoutes = {
   ROOT: '/',
   SIGN_IN: '/sign-in',
   SIGN_UP: '/sign-up',
+  DRAGON_LIST: '/dragon-list',
   RESTORE_PASSWORD_INIT: '/restore-password',
   RESTORE_PASSWORD_CONFIRM: commonFrontendPaths.auth.RESET_PASSWORD_CONFIRM.path,
   ACCOUNT_VERIFICATION_CONFIRM: commonFrontendPaths.auth.ACCOUNT_VERIFICATION_CONFIRM.path,
