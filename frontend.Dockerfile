@@ -15,7 +15,6 @@ COPY ./frontend/package.json ./frontend/
 
 RUN npm pkg set scripts.postinstall="npm run build:shared"
 RUN npm ci -w shared -w frontend
-RUN npm install -g serve
 
 COPY ./frontend ./frontend/
 
