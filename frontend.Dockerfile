@@ -13,6 +13,10 @@ COPY ./.eslintrc.yml ./
 COPY ./shared ./shared/
 COPY ./frontend/package.json ./frontend/
 
+RUN touch ./.env
+RUN echo "REACT_APP_API_ORIGIN_URL = ${$REACT_APP_SERVER_HOST}" >> .env
+RUN echo "REACT_APP_SERVER_HOST = ${$REACT_APP_API_ORIGIN_URL}" >> .env
+
 RUN npm pkg set scripts.postinstall="npm run build:shared"
 RUN npm ci -w shared -w frontend
 
