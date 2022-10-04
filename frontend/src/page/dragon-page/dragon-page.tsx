@@ -1,19 +1,19 @@
 import { ReactElement, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { getDragonData } from '../store/dragon/actions';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { getDragonData } from '../../store/dragon/actions';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import styles from './style.module.scss';
-import { storageService } from '../services/services';
-import { DragonResponseDto } from '../constants/types/dragon/dragon-response-dto';
-import { DataStatus } from '../constants/enums/data-status/data-status';
-import { CachedImg } from '../components/common/cached-img/cached-img';
-import { getCachedImg } from '../helpers/get-cached-img/get-cached-img';
-import { IconColor, IconName, StorageKeys } from '../constants/enums/enums';
-import { Icon } from '../components/common/icon';
+import { storageService } from '../../services/services';
+import { DragonResponseDto } from '../../constants/types/dragon/dragon-response-dto';
+import { DataStatus } from '../../constants/enums/data-status/data-status';
+import { CachedImg } from '../../components/common/cached-img/cached-img';
+import { getCachedImg } from '../../helpers/get-cached-img/get-cached-img';
+import { IconColor, IconName, StorageKeys } from '../../constants/enums/enums';
+import { Icon } from '../../components/common/icon';
 
 const DragonPage = (): ReactElement | null => {
   const dispatch = useAppDispatch();
@@ -84,7 +84,7 @@ const DragonPage = (): ReactElement | null => {
             <p>{first_flight}</p>
           </div>
           <div className={styles['dragon-info-block']}>
-            <Icon name={IconName.BELL} color={IconColor.WHITE} width={'30'} height={'30'} />
+            <Icon name={IconName.BELL} color={IconColor.WHITE} width={'50'} height={'50'} />
             <a href={wikipedia}>Wiki</a>
           </div>
         </div>

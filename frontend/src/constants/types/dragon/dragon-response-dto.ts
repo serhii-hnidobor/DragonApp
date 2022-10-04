@@ -1,4 +1,5 @@
 type DragonResponseDto = {
+  id: string;
   name: string;
   flickr_images: string[];
   wikipedia: string;
@@ -11,9 +12,17 @@ type DragonResponseDto = {
   first_flight: string;
 };
 
+type DragonListResponseDto = {
+  docs: DragonResponseDto[];
+  totalPages: number;
+  page: number;
+  hasPrevPage: boolean;
+  hasNextPage: boolean;
+};
+
 type DragonResponseLengthUnitsType = {
   meters: number;
   feet: number;
 };
 
-export type { DragonResponseDto };
+export type { DragonResponseDto, DragonListResponseDto };

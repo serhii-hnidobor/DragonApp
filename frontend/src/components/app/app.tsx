@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { DragonPage } from '../../page/dragon-page';
+import { DragonPage } from '../../page/dragon-page/dragon-page';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoutes } from '../../constants/enums/app/routes/routes';
 import { AccountVerificationInitPage } from '../../page/account-verification-page/account-verification-init-page';
