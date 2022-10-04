@@ -31,6 +31,9 @@ const DragonPage = (): ReactElement | null => {
     const dragon = state.dragon.data.mainDragon;
     if (!isDragonDataLoadedFromServer || !dragon) {
       const cachedDragon = storageService.retrieve(StorageKeys.CACHED_DRAGON_DATA) as DragonResponseDto;
+      if (!cachedDragon) {
+        return;
+      }
       const flickrImagesFromCache = getCachedImg(cachedDragon.flickr_images);
       return {
         ...cachedDragon,
