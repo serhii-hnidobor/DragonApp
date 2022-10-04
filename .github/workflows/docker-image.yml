@@ -26,7 +26,7 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_FRONTEND_APP_NAME }}
           dockerfile_directory: ./
           dockerfile_name: frontend.Dockerfile
-          docker_options: "--no-cache"
+          docker_options: "--no-cache --build-arg REACT_APP_API_ORIGIN_URL=${{ secrets.REACT_APP_API_ORIGIN_URL }} --build-arg REACT_APP_SERVER_HOST=${{ secrets.REACT_APP_SERVER_HOST }}"
           process_type: web
   deploy-backend:
     needs: [prepareEnviroment, deploy-frontend]
@@ -42,6 +42,6 @@ jobs:
           heroku_app_name: ${{ secrets.HEROKU_BACKEND_APP_NAME }}
           dockerfile_directory: ./
           dockerfile_name: backend.Dockerfile
-          docker_options: "--no-cache  --build-arg REACT_APP_API_ORIGIN_URL=/api/v1 --build-arg REACT_APP_SERVER_HOST=https://dragon-space-app-backend.herokuapp.com/"
+          docker_options: "--no-cache"
           process_type: web
     
