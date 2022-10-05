@@ -1,46 +1,141 @@
-# Getting Started with Create React App
+# DragonApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+## ℹ️ General Info
 
-## Available Scripts
+This is the repository of dragon app where you can see info about SpaceX dragon rocket
 
-In the project directory, you can run:
+## 🏭 Applications
 
-### `npm start`
+- [Backend](./backend) — DragonApp's application backend.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  _To work properly, fill in the `.env` file. Use the `.env.example` file as an example._
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [Frontend](./frontend) — DragonApp's application frontend.
 
-### `npm test`
+  _To work properly, fill in the `.env` file. Use the `.env.example` file as an example._
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Shared](./shared) — Dragons's application common modules for reuse.
 
-### `npm run build`
+- [Shared](./tests) — Dragons's application test.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  _To work properly, fill in the `.env` file. Use the `.env.example` file as an example._
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🖍 Requirements
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [NodeJS](https://nodejs.org/en/) (16.x.x);
+- [NPM](https://www.npmjs.com/) (8.x.x);
+- [PostgreSQL](https://www.postgresql.org/) (14.0)
+- [Docker](https://www.docker.com)
+- run `npx simple-git-hooks` at the root of the project, before the start (it will set the [pre-commit hook](https://www.npmjs.com/package/simple-git-hooks) for any commits).
 
-### `npm run eject`
+## 🏃‍♂️ Simple Start
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Setup database
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Create `.env` folder at the root project and add `api-db.env` file according to `.env.example`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Setup apps
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Fill ENVs in each project
+2. `npm install` at the root
+3. `npx simple-git-hooks` at the root
 
-## Learn More
+### Run project
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+_Each project run in the separate terminal_
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Go to `.docker-local` folder and run: `docker compose up -d`
+2. Apply first migration to DB: `npm run migrate`
+3. Run: `npm run start:backend`
+4. Run: `npm run start:frontend`
+
+## Code Quality
+
+Static analyzers are used for both frontend and backend projects to ensure basic code quality. Additionally, [quality criteria](https://github.com/BinaryStudioAcademy/quality-criteria/blob/production/source/javascript.md) rules are enforced during code review and audit.
+
+## Architecture
+
+### 💽 DB Schema
+
+```mermaid
+  User {
+    String id PK
+    String email
+    String username
+    String password
+    Boolean isActivated
+    DateTime createdAt
+    DateTime updatedAt
+    }
+
+```
+
+## 🧑‍💻 CI / 📦 CD
+
+After push on master branch git action build all app and check code quality after that if it success 
+runs build frontend part and backend part on separate docker container and push it two heroku registri 
+on two app one client part and one backend part and last steps run test two check if everything work correct
+
+[Handled](.github/workflows/docker-image.yml) by [GitHub Actions](https://docs.github.com/en/actions).
+
+### 🗜 Tools
+
+### 🌑 Backend
+
+- [Express](https://expressjs.com/) – a backend framework.
+- [InversifyJS](https://inversify.io) - an IoC container
+- [Prisma](https://www.prisma.io/) – an ORM.
+
+### 🌕 Frontend
+
+- [React](https://reactjs.org/) – a frontend library.
+- [Redux](https://redux.js.org/) + [Redux Toolkit](https://redux-toolkit.js.org/) – a state manager.
+
+#### 🥊 Code quality
+
+- [simple-git-hooks](https://www.npmjs.com/package/simple-git-hooks) — a tool that lets you easily manage git hooks.
+- [lint-staged](https://www.npmjs.com/package/lint-staged) — run linters on git staged files.
+- [editorconfig](https://editorconfig.org/) — helps maintain consistent coding styles for multiple developers working on the same project across various editors and IDEs.
+- [prettier](https://prettier.io/) — an opinionated code formatter.
+- [ls-lint](https://ls-lint.org/) — file and directory name linter.
+- [eslint](https://eslint.org/) – find problems in your JS code
+- [stylelint](https://stylelint.io/) – Find and fix problems in your CSS code
+
+### 🗞 Git
+
+#### 📊 Branches
+
+- **`master`** - production source code.
+
+#### 🗂 Commit flow
+
+```
+<project-prefix>: <modifier> <desc>
+```
+
+##### Modifiers:
+
+- `+` (add)
+- `*` (edit)
+- `-` (remove)
+
+##### Examples:
+
+- `blog-5: + form component`
+- `design-12: * filter markup`
+- `blog-16: - require prop for nickname field`
+
+## Build app in Docker locally
+
+Specify `api.env` `api-db.env` files in `.env` folder use examples from '.env-example' folder at root of project
+Run commands from root:
+
+```
+docker build --build-arg REACT_APP_API_ORIGIN_URL=/api/v1 --build-arg REACT_APP_SERVER_HOST=localhost -t frontend .
+docker build -f .docker/backend.Dockerfile -t backend .
+docker compose -f .docker-local/docker-compose.local.yml up -d
+```
+
+## 
+
+
