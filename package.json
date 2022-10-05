@@ -21,7 +21,7 @@
     "migrate": "npm run migrate -w backend",
     "start:backend": "npm run start:dev -w backend",
     "start:frontend": "npm start -w frontend",
-    "test": "cd ./tests && npm run api:tests",
+    "test": "cd ./tests && npm run api:tests"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
