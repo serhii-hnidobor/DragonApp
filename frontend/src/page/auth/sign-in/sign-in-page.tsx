@@ -1,7 +1,6 @@
 import {
   AuthContainer,
   AuthSubmitButton,
-  createToastNotification,
   ErrorBox,
   Input,
   NavLink,
@@ -16,7 +15,6 @@ import { AppRoutes } from '../../../constants/enums/app/routes/routes';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 import { userSignIn } from '../../../constants/validation-schemas/user/user.validation-schemas';
-import { allAuthNotifications, AuthNotification } from '../../../constants/enums/auth/config/config';
 
 interface SignInFromValues {
   email: string;
@@ -53,9 +51,6 @@ const SignInPage = (): ReactElement => {
       setIsError(true);
     } finally {
       setIsLoading(false);
-      if (!isError) {
-        createToastNotification({ ...allAuthNotifications[AuthNotification.SIGN_UP_SUCCESS] });
-      }
     }
   };
 

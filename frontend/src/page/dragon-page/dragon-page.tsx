@@ -21,6 +21,8 @@ import { Loader } from '../../components/common/loader/loader';
 import { ErrorBox } from '../../components/common/errors/errors';
 import { MobileSwiper } from './common/mobile-swipper';
 import { CachedImg } from '../../components/common/cached-img/cached-img';
+import { signOut } from '../../store/auth/actions';
+import { Button } from '../../components/common/button/button';
 
 const DragonPage = (): ReactElement | null => {
   const dispatch = useAppDispatch();
@@ -40,6 +42,10 @@ const DragonPage = (): ReactElement | null => {
   const dataStatus = useAppSelector((state) => {
     return state.dragon.data.mainDragon.dataStatus;
   });
+
+  const handleSignOut = (): void => {
+    dispatch(signOut());
+  };
 
   const dragonData = useAppSelector((state) => {
     const dragon = state.dragon.data.mainDragon;
@@ -147,6 +153,7 @@ const DragonPage = (): ReactElement | null => {
           route={AppRoutes.DRAGON_LIST}
           className={commonFormStyles['upper-space-regular']}
         />
+        <Button content={'Sign out'} onClick={handleSignOut} className={styles['sign-out-btn']} />
       </div>
     </div>
   );
