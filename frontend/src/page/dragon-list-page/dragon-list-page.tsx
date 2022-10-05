@@ -13,7 +13,7 @@ import { DragonModal } from './common/dragon-modal/dragon-modal';
 
 const DragonListPage = (): ReactElement | null => {
   const dispatch = useAppDispatch();
-  const [isNeedDragonModal, setIsNeedDragonModal] = useState<boolean>(false);
+  const [selectedDragonId, setSelectedDragonId] = useState<string>();
 
   useEffect(() => {
     dispatch(getDragonList(1));
@@ -55,23 +55,28 @@ const DragonListPage = (): ReactElement | null => {
   }
 
   const handleModalClose = (): void => {
-    setIsNeedDragonModal(false);
+    setSelectedDragonId(undefined);
   };
 
-  const handleDragonListItemClick = (): void => {
-    setIsNeedDragonModal(true);
+  const handleDragonListItemClick = (id: string): void => {
+    setSelectedDragonId(id);
   };
 
   return (
     <div className={styles['dragon-list-page-container']}>
       <div className={styles['dragon-list-page-table']}>
-        {isNeedDragonModal && (
-          <DragonModal isOpen={isNeedDragonModal} onClose={handleModalClose} dragonData={dragonList[0]} />
+        {selectedDragonId && (
+          <DragonModal
+            isOpen={!!setSelectedDragonId}
+            onClose={handleModalClose}
+            dragonData={dragonList.find((el) => el.id === selectedDragonId)}
+          />
         )}
         {dragonList.map((dragonData) => {
           const { flickr_images, name, description } = dragonData;
           return (
             <DragonListItem
+              id={dragonData.id}
               key={dragonData.id}
               onClick={handleDragonListItemClick}
               flickr_images={flickr_images}

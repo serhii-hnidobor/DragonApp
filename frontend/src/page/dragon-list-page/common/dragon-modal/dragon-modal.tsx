@@ -11,12 +11,16 @@ import styles from '../../../dragon-page/style.module.scss';
 import modalStyle from './style.module.scss';
 
 type Props = {
-  dragonData: DragonResponseDto;
+  dragonData?: DragonResponseDto;
   onClose: { (): void };
   isOpen: boolean;
 };
 
 const DragonModal: FC<Props> = ({ dragonData, isOpen, onClose }) => {
+  if (!dragonData) {
+    return null;
+  }
+
   const { flickr_images, name, wikipedia, height_w_trunk, dry_mass_kg, first_flight } = dragonData;
 
   return (
