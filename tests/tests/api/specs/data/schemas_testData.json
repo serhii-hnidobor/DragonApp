@@ -1,0 +1,53 @@
+{
+  "schema_signIn": {
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": ["user", "tokens", "message"],
+    "examples": [
+      {
+        "user": {
+          "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "email": "user@example.com"
+        },
+        "tokens": {
+          "accessToken": "string",
+          "refreshToken": "string"
+        },
+        "message": "string"
+      }
+    ]
+  },
+  "schema_refreshToken": {
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": ["tokens"],
+    "examples": [
+      {
+        "tokens": {
+          "accessToken": "string",
+          "refreshToken": "string"
+        }
+      }
+    ]
+  },
+  "schema_userInfo": {
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": ["user"],
+    "examples": [
+      {
+        "email": "somebody@gmail.com",
+        "id": "001722bb-c10b-4a11-a5b7-0f9178760f37"
+      }
+    ]
+  }
+}

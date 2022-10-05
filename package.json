@@ -5,7 +5,8 @@
   "workspaces": [
     "backend",
     "frontend",
-    "shared"
+    "shared",
+    "tests"
   ],
   "scripts": {
     "build": "npm run build -w shared -w frontend -w backend",
