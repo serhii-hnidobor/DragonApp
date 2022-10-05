@@ -12,9 +12,9 @@ const extraArgument = {
 };
 
 const persistConfig = {
-  key: 'root',
+  key: 'auth',
   storage,
-  whitelist: [],
+  whitelist: ['user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

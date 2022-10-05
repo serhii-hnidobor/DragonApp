@@ -1,13 +1,19 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getDragonList } from '../../store/dragon/actions';
 import { DragonListItem } from './common/dragon-list-item-component';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { DataStatus } from '../../constants/enums/data-status/data-status';
 import styles from './style.module.scss';
+import { Loader } from '../../components/common/loader/loader';
+import { ErrorBox } from '../../components/common/errors/errors';
+import { NavLink } from '../../components/common/nav-link/nav-link';
+import { AppRoutes } from '../../constants/enums/app/routes/routes';
+import { DragonModal } from './common/dragon-modal/dragon-modal';
 
 const DragonListPage = (): ReactElement | null => {
   const dispatch = useAppDispatch();
+  const [selectedDragonId, setSelectedDragonId] = useState<string>();
 
   useEffect(() => {
     dispatch(getDragonList(1));
@@ -39,22 +45,53 @@ const DragonListPage = (): ReactElement | null => {
   });
 
   if (dataStatus === DataStatus.REJECTED) {
-    return null;
+    return (
+      <div className={styles['dragon-list-page-container']}>
+        <div className={styles['dragon-list-page-table']}>
+          <ErrorBox message={error} />;
+        </div>
+      </div>
+    );
   }
+
+  const handleModalClose = (): void => {
+    setSelectedDragonId(undefined);
+  };
+
+  const handleDragonListItemClick = (id: string): void => {
+    setSelectedDragonId(id);
+  };
 
   return (
     <div className={styles['dragon-list-page-container']}>
-      <table className={styles['dragon-list-page-table']}>
-        <tbody>
-          {dragonList.map((dragonData) => {
-            const { flickr_images, name, description } = dragonData;
-            return (
-              <DragonListItem key={dragonData.id} flickr_images={flickr_images} name={name} description={description} />
-            );
-          })}
-          {(isLoading || hasNextPage) && <tr ref={sentryRef}></tr>}
-        </tbody>
-      </table>
+      <div className={styles['dragon-list-page-table']}>
+        {selectedDragonId && (
+          <DragonModal
+            isOpen={!!setSelectedDragonId}
+            onClose={handleModalClose}
+            dragonData={dragonList.find((el) => el.id === selectedDragonId)}
+          />
+        )}
+        {dragonList.map((dragonData) => {
+          const { flickr_images, name, description } = dragonData;
+          return (
+            <DragonListItem
+              id={dragonData.id}
+              key={dragonData.id}
+              onClick={handleDragonListItemClick}
+              flickr_images={flickr_images}
+              name={name}
+              description={description}
+            />
+          );
+        })}
+        <NavLink route={AppRoutes.ROOT} prompt={''} linkTitle={'Return to main page'} />
+        {isLoading && (
+          <div ref={sentryRef}>
+            <Loader />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

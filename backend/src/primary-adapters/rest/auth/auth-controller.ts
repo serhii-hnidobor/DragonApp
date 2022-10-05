@@ -20,7 +20,7 @@ import {
   userSignUp,
 } from 'shared/build';
 import { Unauthorized } from '~/shared/exceptions/unauthorized';
-import { generateJwt } from '~/shared/helpers/encryption';
+import { compareHash, generateJwt } from '~/shared/helpers/encryption';
 import { CONFIG } from '~/configuration/config';
 import { NotFound } from '~/shared/exceptions/not-found';
 import { RefreshTokenService } from '~/core/refresh-token/application/refresh-token-service';
@@ -135,7 +135,7 @@ export class AuthController extends BaseHttpController {
     if (!user.isActivated) {
       throw new Forbidden(exceptionMessages.auth.EMAIL_NOT_VERIFIED, errorCodes.auth.signIn.UNVERIFIED);
     }
-    const isSameHash = userRequestDto.password === user.password;
+    const isSameHash = await compareHash(userRequestDto.password, user.password);
     if (!isSameHash) {
       throw new Unauthorized(exceptionMessages.auth.INCORRECT_CREDENTIALS_LOGIN);
     }

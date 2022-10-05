@@ -5,7 +5,6 @@ import { ReactElement, useEffect } from 'react';
 import { signIn } from '../../../store/auth/actions';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import styles from './style.module.scss';
-import { DataStatus } from '../../../constants/enums/data-status/data-status';
 import { AppRoutes } from '../../../constants/enums/app/routes/routes';
 import clsx from 'clsx';
 import { userSignIn } from '../../../constants/validation-schemas/user/user.validation-schemas';
@@ -25,7 +24,7 @@ const SignInPage = (): ReactElement => {
     validationSchema: userSignIn,
   });
 
-  const { dataStatus, error, user } = useAppSelector((state) => state.auth);
+  const { error, user } = useAppSelector((state) => state.auth);
 
   const onSubmit = (submitValue: SignInFromValues): void => {
     dispatch(signIn(submitValue));
@@ -66,8 +65,8 @@ const SignInPage = (): ReactElement => {
               wrapperClassName={commonFormStyles['form-input']}
             />
             <AuthSubmitButton
-              isLoading={dataStatus === DataStatus.PENDING}
-              disabled={dataStatus === DataStatus.PENDING || !isValid}
+              isLoading={false}
+              disabled={!isValid}
               name="Submit"
               className={commonFormStyles['upper-space-regular']}
             />

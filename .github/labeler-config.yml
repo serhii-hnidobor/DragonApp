@@ -1,0 +1,11 @@
+root: '*'
+
+ci/cd: .github/**/*
+
+docker: .docker-local/**/*
+
+frontend: frontend/**/*
+
+backend: backend/**/*
+
+shared: shared/**/*

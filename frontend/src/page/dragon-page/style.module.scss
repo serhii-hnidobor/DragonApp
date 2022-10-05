@@ -2,8 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
+  overflow-y: hidden;
+  color: var(--white-text-color);
 }
 
 .carousel-image {
@@ -14,7 +16,7 @@
 }
 
 .carousel {
-  width: 75%;
+  width: 95%;
   max-width: 1280px;
   min-height: 420px;
   max-height: 720px;
@@ -35,23 +37,10 @@
   font-size: 18px;
   text-align: center;
   background: none;
-}
-
-.swiper-slide:nth-child(2n) {
-  width: 20%;
-}
-
-.swiper-slide:nth-child(3n) {
-  width: 40%;
-}
-
-.dragon-info-block > p {
-  color: white;
-  font-size: 20px;
-}
-
-.dragon-info-block > svg {
-  margin-bottom: 10px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
 }
 
 .dragon-page-sub-header {
@@ -66,8 +55,9 @@
   display: grid;
   grid-template-rows: 150px 150px;
   grid-template-columns: 1fr 1fr;
-  width: 600px;
+  max-width: 600px;
   margin: 0 auto;
+  color: var(--white-text-color);
 }
 
 .dragon-info-block {
@@ -78,7 +68,7 @@
 }
 
 .dragon-description-wrapper {
-  width: 650px;
+  max-width: 650px;
   margin: 0 auto;
 }
 
