@@ -4,6 +4,9 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 
+import swaggerUi from 'swagger-ui-express';
+import { swagger as swaggerSpecification } from './configuration/swagger';
+
 import 'reflect-metadata';
 
 import { handleHttpError } from './primary-adapters/rest/common/http-error-handlers';
@@ -32,6 +35,7 @@ class Application {
   private initMiddlewares(): void {
     this.app?.setConfig((app) => {
       app.use(helmet());
+      app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecification));
       app.use(bodyParser.urlencoded({ 'extended': true }));
       app.use(bodyParser.json());
       app.use(cors());

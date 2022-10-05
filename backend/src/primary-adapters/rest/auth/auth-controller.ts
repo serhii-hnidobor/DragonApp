@@ -30,6 +30,56 @@ import { Forbidden } from '~/shared/exceptions/forbidden';
 import { authenticationMiddleware, validationMiddleware } from '~/primary-adapters/rest/middleware';
 import { ExtendedAuthenticatedRequest } from '~/shared/types/express';
 
+/**
+ * @swagger
+ * tags:
+ *   name: auth
+ *   description: Authorization
+ * components:
+ *    securitySchemes:
+ *      bearerAuth:
+ *        type: http
+ *        scheme: bearer
+ *        bearerFormat: JWT
+ *    schemas:
+ *      UserBaseResponse:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: string
+ *            format: uuid
+ *          email:
+ *            type: string
+ *            format: email
+ *      TokenPair:
+ *        type: object
+ *        properties:
+ *          accessToken:
+ *            type: string
+ *          refreshToken:
+ *            type: string
+ *      Error:
+ *        type: object
+ *        properties:
+ *          message:
+ *            type: string
+ *        required:
+ *          - message
+ *    responses:
+ *      NotFound:
+ *        description: The specified resource was not found
+ *        schema:
+ *          type: array
+ *          items:
+ *            $ref: '#/components/schemas/Error'
+ *      Unauthorized:
+ *        description: Unauthorized
+ *        schema:
+ *          type: array
+ *          items:
+ *            $ref: '#/components/schemas/Error'
+ */
+
 @controller(ApiPath.AUTH)
 export class AuthController extends BaseHttpController {
   private userService: UserService;
@@ -48,6 +98,52 @@ export class AuthController extends BaseHttpController {
     this.userService = userService;
   }
 
+  /**
+   * @swagger
+   * /auth/sign-up:
+   *    post:
+   *      tags:
+   *      - auth
+   *      security: []
+   *      operationId: signUpUser
+   *      description: Sign up user into the system
+   *      requestBody:
+   *        description: User auth data
+   *        required: true
+   *        content:
+   *          application/json:
+   *            schema:
+   *              type: object
+   *              properties:
+   *                email:
+   *                  type: string
+   *                  format: email
+   *                username:
+   *                  type: string
+   *                password:
+   *                  type: string
+   *                passwordConfirm:
+   *                  type: string
+   *      responses:
+   *        200:
+   *          description: Successful operation
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: object
+   *                properties:
+   *                  message:
+   *                    type: string
+   *        400:
+   *          description: Email is already taken.
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: array
+   *                items:
+   *                  $ref: '#/components/schemas/Error'
+   */
+
   @httpPost(AuthApiPath.SIGN_UP, validationMiddleware(userSignUp))
   public async signUp(@requestBody() userRequestDto: UserSignUpRequestDto): Promise<UserSignUpResponseDto> {
     const duplicateUser = await this.userService.getUserByEmail(userRequestDto.email);
@@ -59,6 +155,45 @@ export class AuthController extends BaseHttpController {
     await this.accountVerificationService.sendVerificationEmail(user);
     return { message: successMessages.auth.SUCCESS_SIGN_UP };
   }
+
+  /**
+   * @swagger
+   * /auth/refresh-tokens:
+   *    post:
+   *      tags:
+   *      - auth
+   *      security: []
+   *      operationId: refreshTokens
+   *      description: Refresh user's access token
+   *      requestBody:
+   *        description: refresh token
+   *        required: true
+   *        content:
+   *          application/json:
+   *            schema:
+   *              type: object
+   *              properties:
+   *                refreshToken:
+   *                  type: string
+   *      responses:
+   *        200:
+   *          description: Successful operation
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: object
+   *                properties:
+   *                  tokens:
+   *                    $ref: '#/components/schemas/TokenPair'
+   *        401:
+   *          description: Such user-token pair was not found or inspired
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: array
+   *                items:
+   *                  $ref: '#/components/schemas/Error'
+   */
 
   @httpPost(AuthApiPath.REFRESH_TOKENS)
   public async refreshTokens(
@@ -83,7 +218,44 @@ export class AuthController extends BaseHttpController {
       },
     };
   }
-
+  /**
+   * @swagger
+   * /auth/account-verification-confirm:
+   *    post:
+   *      tags:
+   *      - auth
+   *      security: []
+   *      operationId: accountVerificationConfirm
+   *      description: Confirm email by providing a token from the link in a letter
+   *      requestBody:
+   *        description: Token sent by email previously
+   *        required: true
+   *        content:
+   *          application/json:
+   *            schema:
+   *              type: object
+   *              properties:
+   *                token:
+   *                  type: string
+   *      responses:
+   *        200:
+   *          description: Successful operation
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: object
+   *                properties:
+   *                  message:
+   *                    type: string
+   *        401:
+   *          description: Incorrect token.
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: array
+   *                items:
+   *                  $ref: '#/components/schemas/Error'
+   */
   @httpPost(AuthApiPath.ACCOUNT_VERIFICATION_CONFIRM)
   public async accountVerificationConfirm(
     @requestBody() requestDto: AccountVerificationConfirmRequestDto,
@@ -103,6 +275,46 @@ export class AuthController extends BaseHttpController {
       message: successMessages.auth.SUCCESS_ACCOUNT_VERIFICATION,
     };
   }
+
+  /**
+   * @swagger
+   * /auth/account-verification-init:
+   *    post:
+   *      tags:
+   *      - auth
+   *      security: []
+   *      operationId: accountVerificationInit
+   *      description: Initialize verification flow by sending email to the user
+   *      requestBody:
+   *        description: User email
+   *        required: true
+   *        content:
+   *          application/json:
+   *            schema:
+   *              type: object
+   *              properties:
+   *                email:
+   *                  type: string
+   *                  format: email
+   *      responses:
+   *        200:
+   *          description: Successful operation (whether already activated or letter was sent will be said in the message)
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: object
+   *                properties:
+   *                  message:
+   *                    type: string
+   *        404:
+   *          description: Email not found.
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: array
+   *                items:
+   *                  $ref: '#/components/schemas/Error'
+   */
 
   @httpPost(AuthApiPath.ACCOUNT_VERIFICATION_INIT)
   public async accountVerificationInit(
@@ -125,6 +337,60 @@ export class AuthController extends BaseHttpController {
       message: successMessages.auth.SUCCESS_ACCOUNT_VERIFICATION_INIT_NEW_LETTER,
     };
   }
+
+  /**
+   * @swagger
+   * /auth/sign-in:
+   *    post:
+   *      tags:
+   *      - auth
+   *      security: []
+   *      operationId: signInUser
+   *      description: Sign in user into the system
+   *      requestBody:
+   *        description: User auth data
+   *        required: true
+   *        content:
+   *          application/json:
+   *            schema:
+   *              type: object
+   *              properties:
+   *                email:
+   *                  type: string
+   *                  format: email
+   *                password:
+   *                  type: string
+   *      responses:
+   *        200:
+   *          description: Successful operation
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: object
+   *                properties:
+   *                  user:
+   *                    $ref: '#/components/schemas/UserBaseResponse'
+   *                  tokens:
+   *                    $ref: '#/components/schemas/TokenPair'
+   *                  message:
+   *                    type: string
+   *        400:
+   *          description: Invalid request format.
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: array
+   *                items:
+   *                  $ref: '#/components/schemas/Error'
+   *        401:
+   *          description: Incorrect credentials.
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: array
+   *                items:
+   *                  $ref: '#/components/schemas/Error'
+   */
 
   @httpPost(AuthApiPath.SIGN_IN, validationMiddleware(userSignIn))
   public async signIn(@requestBody() userRequestDto: UserSignInRequestDto): Promise<UserSignInResponseDto> {
@@ -153,6 +419,46 @@ export class AuthController extends BaseHttpController {
       message: successMessages.auth.SUCCESS_SIGN_IN,
     };
   }
+
+  /**
+   * @swagger
+   * /auth/user:
+   *    get:
+   *      tags:
+   *      - auth
+   *      security:
+   *      - bearerAuth: []
+   *      operationId: getCurrentUser
+   *      description: Get current user info
+   *      responses:
+   *        200:
+   *          description: Successful operation
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: object
+   *                properties:
+   *                  user:
+   *                    $ref: '#/components/schemas/UserBaseResponse'
+   *                  tokens:
+   *                    $ref: '#/components/schemas/TokenPair'
+   *        400:
+   *          description: Invalid request format.
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: array
+   *                items:
+   *                  $ref: '#/components/schemas/Error'
+   *        404:
+   *          description: Your user account was not found.
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: array
+   *                items:
+   *                  $ref: '#/components/schemas/Error'
+   */
 
   @httpGet(AuthApiPath.USER, authenticationMiddleware)
   public async getCurrentUser(@request() req: ExtendedAuthenticatedRequest): Promise<GetCurrentUserResponseDto> {
