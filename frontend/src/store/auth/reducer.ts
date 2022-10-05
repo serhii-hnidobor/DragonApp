@@ -2,8 +2,6 @@ import { createReducer, isAnyOf } from '@reduxjs/toolkit';
 
 import { DataStatus } from 'constants/enums/enums';
 import { UserBaseResponseDto } from 'constants/types/types';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 import { signOut, refreshTokens, signIn, signUp, loadCurrentUser } from './actions';
 import { getRejectedErrorData } from '../../helpers/helpers';
@@ -66,11 +64,4 @@ const reducer = createReducer(initialState, (builder) => {
   );
 });
 
-const persistConfig = {
-  key: 'auth',
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, reducer);
-
-export { persistedReducer as reducer };
+export { reducer };

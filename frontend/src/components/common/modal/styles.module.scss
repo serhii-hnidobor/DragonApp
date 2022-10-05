@@ -1,0 +1,26 @@
+.modal-content-container {
+  position: relative;
+  min-width: 320px;
+  min-height: 105px;
+  max-height: 100vh;
+  padding: 20px;
+  background-color: var(--gray-400-primary-background);
+  border-radius: 3px;
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: none;
+}

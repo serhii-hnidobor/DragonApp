@@ -1,14 +1,14 @@
 import { AuthSubmitButton, ErrorBox, Input, NavLink, PasswordInput } from '../../../components/common/common';
 import { useAppForm } from '../../../hooks/use-app-form/use-app-form.hook';
 import commonFormStyles from '../../account-verification-page/form-controls.module.scss';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { signUp } from '../../../store/auth/actions';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import styles from '../sign-in/style.module.scss';
-import { DataStatus } from '../../../constants/enums/data-status/data-status';
 import { AppRoutes } from '../../../constants/enums/app/routes/routes';
 import clsx from 'clsx';
 import { userSignUp } from '../../../constants/validation-schemas/validation-schemas';
+import { useNavigate } from 'react-router-dom';
 
 interface SignUpFormValues {
   email: string;
@@ -18,23 +18,31 @@ interface SignUpFormValues {
 
 const SignUpPage = (): ReactElement => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const { control, errors, handleSubmit, isValid } = useAppForm<SignUpFormValues>({
     defaultValues: { email: '', password: '', passwordConfirm: '' },
     mode: 'onChange',
     validationSchema: userSignUp,
   });
 
-  const { dataStatus, error } = useAppSelector((state) => state.auth);
+  const { error, user } = useAppSelector((state) => state.auth);
 
   const onSubmit = (submitValue: SignUpFormValues): void => {
     dispatch(signUp(submitValue));
   };
 
+  useEffect(() => {
+    if (user) {
+      navigate(AppRoutes.ROOT);
+    }
+  }, [user, navigate]);
+
   return (
     <div className={styles['sign-in-page-container']}>
       <div className={styles['sign-in-container']}>
         <div className={styles['sign-in-container-content']}>
-          <div className={styles['sign-in-header']}>
+          <div className={styles['sign-up-header']}>
             <h1>Sign up</h1>
           </div>
           {error && <ErrorBox message={error} />}
@@ -66,8 +74,8 @@ const SignUpPage = (): ReactElement => {
               wrapperClassName={commonFormStyles['form-input']}
             />
             <AuthSubmitButton
-              isLoading={dataStatus === DataStatus.PENDING}
-              disabled={dataStatus === DataStatus.PENDING || !isValid}
+              isLoading={false}
+              disabled={!isValid}
               name="Submit"
               className={commonFormStyles['upper-space-regular']}
             />

@@ -42,7 +42,7 @@ export class UserRepositoryAdapter implements UserRepository {
     });
   }
 
-  createUser(userRequestDto: UserSignUpRequestDto): Promise<User> {
+  async createUser(userRequestDto: UserSignUpRequestDto): Promise<User> {
     return this.prismaClient.user.create({
       data: userRequestDto,
     });

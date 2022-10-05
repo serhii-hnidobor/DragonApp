@@ -3,6 +3,7 @@ import { User } from '@prisma/client';
 import { CONTAINER_TYPES, UserSignUpRequestDto } from '../../../shared/types/types';
 import { UserRepository } from '../port/user-repository';
 import { RefreshTokenRepository } from '~/core/refresh-token/port/refresh-token-repository';
+import { hashValue } from '~/shared/helpers/encryption';
 
 @injectable()
 export class UserService {
@@ -37,7 +38,8 @@ export class UserService {
     return this.refreshTokenRepository.createForUser(userId);
   }
 
-  createUser(userRequestDto: UserSignUpRequestDto): Promise<User> {
+  async createUser(userRequestDto: UserSignUpRequestDto): Promise<User> {
+    userRequestDto.password = await hashValue(userRequestDto.password);
     return this.userRepository.createUser(userRequestDto);
   }
 }
