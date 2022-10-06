@@ -16,7 +16,7 @@ This is the repository of dragon app where you can see info about SpaceX dragon 
 
 - [Shared](./shared) — Dragons's application common modules for reuse.
 
-- [Shared](./tests) — Dragons's application test.
+- [Tests](./tests) — Dragons's application test.
 
   _To work properly, fill in the `.env` file. Use the `.env.example` file as an example._
 
