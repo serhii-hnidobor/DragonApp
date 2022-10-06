@@ -44,10 +44,9 @@ This is the repository of dragon app where you can see info about SpaceX dragon 
 
 _Each project run in the separate terminal_
 
-1. Go to `.docker-local` folder and run: `docker compose up -d`
-2. Apply first migration to DB: `npm run migrate`
-3. Run: `npm run start:backend`
-4. Run: `npm run start:frontend`
+1. Apply first migration to DB: `npm run migrate`
+2. Run: `npm run start:backend`
+3. Run: `npm run start:frontend`
 
 ## Code Quality
 
@@ -57,7 +56,7 @@ Static analyzers are used for both frontend and backend projects to ensure basic
 
 ### 💽 DB Schema
 
-```mermaid
+```
   User {
     String id PK
     String email
@@ -66,8 +65,7 @@ Static analyzers are used for both frontend and backend projects to ensure basic
     Boolean isActivated
     DateTime createdAt
     DateTime updatedAt
-    }
-
+  }
 ```
 
 ## 🧑‍💻 CI / 📦 CD
@@ -131,8 +129,8 @@ Specify `api.env` `api-db.env` files in `.env` folder use examples from '.env-ex
 Run commands from root:
 
 ```
-docker build --build-arg REACT_APP_API_ORIGIN_URL=/api/v1 --build-arg REACT_APP_SERVER_HOST=localhost -t frontend .
-docker build -f .docker/backend.Dockerfile -t backend .
+docker build -f frontend.Dockerfile --build-arg REACT_APP_API_ORIGIN_URL=/api/v1 --build-arg REACT_APP_SERVER_HOST=localhost -t frontend .
+docker build -f backend.Dockerfile -t backend .
 docker compose -f .docker-local/docker-compose.local.yml up -d
 ```
 
