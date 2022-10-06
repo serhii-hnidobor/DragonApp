@@ -18,3 +18,9 @@
 .dragon-list-page-table > div:nth-child(2n) {
   margin: 30px 0;
 }
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

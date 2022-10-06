@@ -9,6 +9,8 @@ import { SwiperSlide } from 'swiper/react';
 
 import styles from '../../../dragon-page/style.module.scss';
 import modalStyle from './style.module.scss';
+import { Button } from '../../../../components/common/button/button';
+import clsx from 'clsx';
 
 type Props = {
   dragonData?: DragonResponseDto;
@@ -58,6 +60,13 @@ const DragonModal: FC<Props> = ({ dragonData, isOpen, onClose }) => {
             Wiki
           </a>
         </div>
+      </div>
+      <div>
+        <Button
+          content={'Close'}
+          onClick={onClose}
+          className={clsx(styles['sign-out-btn'], modalStyle['close-modal-btn'])}
+        />
       </div>
     </Modal>
   );

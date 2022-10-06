@@ -85,12 +85,12 @@ const DragonListPage = (): ReactElement | null => {
             />
           );
         })}
-        <NavLink route={AppRoutes.ROOT} prompt={''} linkTitle={'Return to main page'} />
         {isLoading && (
-          <div ref={sentryRef}>
+          <div ref={sentryRef} className={styles['loader-container']}>
             <Loader />
           </div>
         )}
+        <NavLink route={AppRoutes.ROOT} prompt={''} linkTitle={'Return to main page'} />
       </div>
     </div>
   );
