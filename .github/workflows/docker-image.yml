@@ -52,6 +52,7 @@ jobs:
         - uses: actions/checkout@v2
         - run: cd tests
         - run: touch .env
+        - run: ls -a
         - run: echo "TESTS_ENV_NAME=Environment" >> .env
         - run: echo "TESTS_BASE_URL=${{ secrets.TESTS_BASE_URL }}" >> .env
         - run: echo "TESTS_SWAGGER_URL=${{ secrets.TESTS_SWAGGER_URL }}" >> .env
