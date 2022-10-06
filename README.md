@@ -48,9 +48,13 @@ _Each project run in the separate terminal_
 2. Run: `npm run start:backend`
 3. Run: `npm run start:frontend`
 
+## ‍💻 Run test
+
+From root run `npm run tests`
+
 ## Code Quality
 
-Static analyzers are used for both frontend and backend projects to ensure basic code quality. Additionally, [quality criteria](https://github.com/BinaryStudioAcademy/quality-criteria/blob/production/source/javascript.md) rules are enforced during code review and audit.
+Static analyzers are used for both frontend and backend projects to ensure basic code quality.
 
 ## Architecture
 
@@ -60,7 +64,6 @@ Static analyzers are used for both frontend and backend projects to ensure basic
   User {
     String id PK
     String email
-    String username
     String password
     Boolean isActivated
     DateTime createdAt
@@ -70,8 +73,8 @@ Static analyzers are used for both frontend and backend projects to ensure basic
 
 ## 🧑‍💻 CI / 📦 CD
 
-After push on master branch git action build all app and check code quality after that if it success 
-runs build frontend part and backend part on separate docker container and push it two heroku registri 
+After push on master branch git action build all app and check code quality after that if it success
+runs build frontend part and backend part on separate docker container and push it two heroku registry
 on two app one client part and one backend part and last steps run test two check if everything work correct
 
 [Handled](.github/workflows/docker-image.yml) by [GitHub Actions](https://docs.github.com/en/actions).
@@ -135,5 +138,3 @@ docker compose -f .docker-local/docker-compose.local.yml up -d
 ```
 
 ## 
-
-
