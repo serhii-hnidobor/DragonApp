@@ -20,7 +20,6 @@ import { useWindowDimensions } from '../../hooks/use-window-dimension/use-window
 import { Loader } from '../../components/common/loader/loader';
 import { ErrorBox } from '../../components/common/errors/errors';
 import { MobileSwiper } from './common/mobile-swipper';
-import { CachedImg } from '../../components/common/cached-img/cached-img';
 import { signOut } from '../../store/auth/actions';
 import { Button } from '../../components/common/button/button';
 
@@ -96,7 +95,7 @@ const DragonPage = (): ReactElement | null => {
   const imagesElementsArray = flickr_images?.map((image, index) => {
     return (
       <SwiperSlide key={`image-${index}`} className={styles['swiper-slide']}>
-        <CachedImg src={image} alt={name as string} height={'500'} className={styles['carousel-image']} />
+        <img src={image} alt={name as string} height={'500'} className={styles['carousel-image']} />
       </SwiperSlide>
     );
   });
