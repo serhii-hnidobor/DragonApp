@@ -50,11 +50,12 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
-        - run: cd ./tests
+        - run: cd tests
         - run: touch .env
         - run: echo "TESTS_ENV_NAME=Environment" >> .env
         - run: echo "TESTS_BASE_URL=${{ secrets.TESTS_BASE_URL }}" >> .env
         - run: echo "TESTS_SWAGGER_URL=${{ secrets.TESTS_SWAGGER_URL }}" >> .env
         - run: echo "TESTS_USER_EMAIL=${{ secrets.TESTS_USER_EMAIL }}" >> .env
         - run: echo "TESTS_USER_PASSWORD=${{ secrets.TESTS_USER_PASSWORD }}" >> .env
+        - run: npm i
         - run: npm run test
