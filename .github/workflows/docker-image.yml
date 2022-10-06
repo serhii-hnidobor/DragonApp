@@ -57,7 +57,6 @@ jobs:
         - run: echo "TESTS_SWAGGER_URL=${{ secrets.TESTS_SWAGGER_URL }}" >> .env
         - run: echo "TESTS_USER_EMAIL=${{ secrets.TESTS_USER_EMAIL }}" >> .env
         - run: echo "TESTS_USER_PASSWORD=${{ secrets.TESTS_USER_PASSWORD }}" >> .env
-        - run: echo $(<./.env)
         - run: mv .env ./tests/.env
         - run: npm i
         - run: npm run test
