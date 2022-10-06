@@ -22,6 +22,7 @@ import { ErrorBox } from '../../components/common/errors/errors';
 import { MobileSwiper } from './common/mobile-swipper';
 import { signOut } from '../../store/auth/actions';
 import { Button } from '../../components/common/button/button';
+import { CachedImg } from '../../components/common/cached-img/cached-img';
 
 const DragonPage = (): ReactElement | null => {
   const dispatch = useAppDispatch();
@@ -95,7 +96,7 @@ const DragonPage = (): ReactElement | null => {
   const imagesElementsArray = flickr_images?.map((image, index) => {
     return (
       <SwiperSlide key={`image-${index}`} className={styles['swiper-slide']}>
-        <img src={image} alt={name as string} height={'500'} className={styles['carousel-image']} />
+        <CachedImg src={image} alt={name as string} height={'500'} className={styles['carousel-image']} />
       </SwiperSlide>
     );
   });

@@ -46,10 +46,14 @@ const useImageCaching = (): [MutableRefObject<HTMLImageElement>, VoidFunction, b
     const context = canvas.getContext('2d');
     canvas.width = 500;
     canvas.height = 500;
-    context?.drawImage(img, 0, 0);
-    const base64 = canvas.toDataURL('image/jpeg', 0.5);
-    canvas.remove();
-    cacheImg(base64, src);
+    try {
+      context?.drawImage(img, 0, 0);
+      const base64 = canvas.toDataURL('image/jpeg', 0.5);
+      canvas.remove();
+      cacheImg(base64, src);
+    } catch {
+      return;
+    }
   };
 
   useEffect(() => {
