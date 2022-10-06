@@ -3,8 +3,8 @@ services:
   backend:
     image: backend
     build:
-      context: ../
-      dockerfile: backend.Dockerfile
+      context: .docker-local
+      dockerfile: backend-local.Dockerfile
     container_name: backend
     ports:
       - '5001:5001'
@@ -21,8 +21,8 @@ services:
   frontend:
     image: frontend
     build:
-      context: ../
-      dockerfile: frontend.Dockerfile
+      context: .docker-local
+      dockerfile: frontend-local.Dockerfile
     container_name: frontend
     depends_on:
       - backend
@@ -37,7 +37,7 @@ services:
         max-size: "10m"
         max-file: "5"
     volumes:
-      - ../nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ../nginx/nginx-local.conf:/etc/nginx/nginx.conf
     networks:
       - backend-network
       - frontend-network

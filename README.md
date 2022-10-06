@@ -129,8 +129,8 @@ Specify `api.env` `api-db.env` files in `.env` folder use examples from '.env-ex
 Run commands from root:
 
 ```
-docker build -f frontend.Dockerfile --build-arg REACT_APP_API_ORIGIN_URL=/api/v1 --build-arg REACT_APP_SERVER_HOST=localhost -t frontend .
-docker build -f backend.Dockerfile -t backend .
+docker build --build-arg REACT_APP_API_ORIGIN_URL=/api/v1 --build-arg REACT_APP_SERVER_HOST=localhost -f .docker-local/frontend-local.Dockerfile -t frontend .
+docker build -f .docker-local/backend-local.Dockerfile -t backend .
 docker compose -f .docker-local/docker-compose.local.yml up -d
 ```
 

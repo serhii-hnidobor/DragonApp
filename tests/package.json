@@ -5,9 +5,7 @@
   "license": "ISC",
   "main": "index.js",
   "scripts": {
-    "api:tests": "mocha 'tests/api/specs/**/*_api-test.ts'",
-    "api:tests:ci": "mocha --api.configName dev -r ts-node/register 'tests/api/specs/**/*_api-test.ts'",
-    "api:tests:dev": "mocha --api.configName dev 'tests/api/specs/**/*_api-test.ts'"
+    "api:tests": "mocha 'tests/api/specs/**/*_api-test.ts'"
   },
   "dependencies": {
     "allure-commandline": "2.18.1",
