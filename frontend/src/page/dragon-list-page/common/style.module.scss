@@ -32,6 +32,11 @@
   user-select: none;
 }
 
+.learn-more-container > h3:hover {
+  color: var(--link-hover-color);
+  transition: all 0.3s ease;
+}
+
 .learn-more-container {
   display: flex;
   align-items: center;

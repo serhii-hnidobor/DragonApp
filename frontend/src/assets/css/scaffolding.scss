@@ -16,9 +16,15 @@ body {
 }
 
 a {
-  color: var(--white-text-color);
-  font-size: 16px;
+  color: var(--brand-green-color);
+  font-weight: 600;
+  font-size: 18px;
   text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover-color);
+  transition: all 0.3s ease;
 }
 
 :root {
