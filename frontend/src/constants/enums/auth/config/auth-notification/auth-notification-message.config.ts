@@ -12,9 +12,6 @@ const matchAuthNotificationWithMessage: Record<AuthNotification, AuthNotificatio
   [AuthNotification.SIGN_UP_SUCCESS]: AuthNotificationMessage.SIGN_UP_SUCCESS,
   [AuthNotification.ACCOUNT_VERIFICATION_LETTER_SENT]: AuthNotificationMessage.ACCOUNT_VERIFICATION_LETTER_SENT_DEFAULT,
   [AuthNotification.ACCOUNT_VERIFICATION_SUCCESS]: AuthNotificationMessage.ACCOUNT_VERIFICATION_DONE_DEFAULT,
-  [AuthNotification.PASSWORD_RESET_LETTER_SENT_SUCCESS]:
-    AuthNotificationMessage.PASSWORD_RESET_LETTER_SENT_SUCCESS_DEFAULT,
-  [AuthNotification.PASSWORD_RESET_SUCCESS]: AuthNotificationMessage.PASSWORD_RESET_SUCCESS,
 };
 
 export { matchAuthNotificationWithMessage };

@@ -8,23 +8,23 @@ import { SignInPage } from '../../page/auth/sign-in/sign-in-page';
 import { SignUpPage } from '../../page/auth/sign-up/sign-up-page';
 import { ProtectedRoute } from '../common/protected-route/protected-route';
 import { tokensStorageService } from '../../services/services';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
+import { ReactNotifications } from 'react-notifications-component';
 import { authActions } from '../../store/actions';
-import { DataStatus } from '../../constants/enums/data-status/data-status';
 import { DragonListPage } from '../../page/dragon-list-page/dragon-list-page';
 
 function App(): ReactElement {
   const dispatch = useAppDispatch();
   const hasToken = Boolean(tokensStorageService.getTokens().accessToken);
-  const { dataStatus: userLoadDataStatus } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (hasToken) {
       dispatch(authActions.loadCurrentUser());
     }
   }, [hasToken, dispatch]);
-  if (userLoadDataStatus !== DataStatus.PENDING) {
-    return (
+  return (
+    <>
+      <ReactNotifications />
       <Routes>
         <Route path={AppRoutes.ACCOUNT_VERIFICATION_CONFIRM} element={<AccountVerificationConfirmPage />} />
         <Route path={AppRoutes.ACCOUNT_VERIFICATION_INIT} element={<AccountVerificationInitPage />} />
@@ -33,9 +33,8 @@ function App(): ReactElement {
         <Route path={AppRoutes.ROOT} element={<ProtectedRoute element={<DragonPage />} />} />
         <Route path={AppRoutes.DRAGON_LIST} element={<ProtectedRoute element={<DragonListPage />} />} />
       </Routes>
-    );
-  }
-  return <></>;
+    </>
+  );
 }
 
 export { App };

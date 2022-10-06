@@ -4,8 +4,14 @@
   align-items: center;
   width: 100%;
   min-height: 100vh;
+  padding: 25px;
   overflow-y: hidden;
   color: var(--white-text-color);
+}
+
+.sign-out-btn {
+  margin: 20px auto 0;
+  padding: 30px 7px;
 }
 
 .carousel-image {
